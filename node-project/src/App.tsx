@@ -1,15 +1,15 @@
-import React from 'react';
-import logo from './assets/logo.png'; // Asegúrate de que la ruta sea correcta
+import { useState } from "react";
+import logo from "./assets/logo.png"; // Asegúrate de que la ruta sea correcta
 // Importa los logos de los bancos (imágenes locales)
-import banco1 from './assets/banco1.png';
-import banco2 from './assets/banco2.png';
-import banco3 from './assets/banco3.png';
-import banco4 from './assets/banco4.png';
-import banco5 from './assets/banco5.png';
-import banco6 from './assets/banco6.png';
-import pedidosya from './assets/pedidosya.png';
-import dia from './assets/dia.jpg';
-import jumbo from './assets/jumbo.png';
+import banco1 from "./assets/banco1.png";
+import banco2 from "./assets/banco2.png";
+import banco3 from "./assets/banco3.png";
+import banco4 from "./assets/banco4.png";
+import banco5 from "./assets/banco5.png";
+import banco6 from "./assets/banco6.png";
+import pedidosya from "./assets/pedidosya.png";
+import dia from "./assets/dia.jpg";
+import jumbo from "./assets/jumbo.png";
 
 import {
   Bell,
@@ -23,29 +23,41 @@ import {
   CreditCard,
   Star,
   HelpCircle,
-  Plus
-} from 'lucide-react';
+  Plus,
+} from "lucide-react";
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [openFaq, setOpenFaq] = React.useState<number | null>(null);
-  const [isWaitlistOpen, setIsWaitlistOpen] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-  const [cardCount, setCardCount] = React.useState('');
-  const [banks, setBanks] = React.useState('');
-  const [wouldUseApp, setWouldUseApp] = React.useState('yes');
-  const [functionalities, setFunctionalities] = React.useState('');
+  const appsScriptsUrl =
+    "https://script.google.com/macros/s/AKfycbx-tk1p1iMK_49VUOPlzbOUKwSGPxikZsag9DcMwX8OAlyKA2w0-ycLBFae5bh8xhRB/exec";
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [cardCount, setCardCount] = useState("");
+  const [banks, setBanks] = useState("");
+  const [location, setLocation] = useState("");
+  const [wouldUseApp, setWouldUseApp] = useState("");
+  const [features, setfeatures] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = { email, cardCount, banks, wouldUseApp, functionalities };
-    fetch('https://script.google.com/a/macros/ucc.edu.ar/s/AKfycbztaPwk6I9kI_UV97ldrrAbpBUMvRCG8zsUD1lfC_oraRf-ZF0Y8AJ4pukJpeavtwQ/exec', { // Reemplaza con la URL del despliegue de tu Apps Script
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+    const formData = {
+      email,
+      cardCount,
+      banks,
+      location,
+      wouldUseApp,
+      features,
+    };
+    fetch(appsScriptsUrl, {
+      redirect: "follow",
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(formData),
     })
       .then(() => {
-        alert('¡Gracias por unirte a la waitlist!');
+        alert("¡Gracias por unirte a la waitlist!");
         setIsWaitlistOpen(false);
       })
       .catch((err) => console.error(err));
@@ -55,23 +67,23 @@ function App() {
     {
       icon: <Clock className="w-12 h-12 text-primary" />,
       title: "Ahorra tiempo",
-      description: "Encuentra todas las ofertas bancarias en segundos"
+      description: "Encuentra todas las ofertas bancarias en segundos",
     },
     {
       icon: <Bell className="w-12 h-12 text-primary" />,
       title: "Notificaciones personalizadas",
-      description: "Recibe alertas de las ofertas que más te interesan"
+      description: "Recibe alertas de las ofertas que más te interesan",
     },
     {
       icon: <Tags className="w-12 h-12 text-primary" />,
       title: "Organización por categorías",
-      description: "Navega fácilmente entre restaurantes, retail, viajes y más"
+      description: "Navega fácilmente entre restaurantes, retail, viajes y más",
     },
     {
       icon: <Building2 className="w-12 h-12 text-primary" />,
       title: "Múltiples bancos",
-      description: "Compatible con los principales bancos del país"
-    }
+      description: "Compatible con los principales bancos del país",
+    },
   ];
 
   const mockOffers = [
@@ -79,35 +91,38 @@ function App() {
       logo: pedidosya,
       title: "45% de reintegro en PedidosYA",
       bank: "Amex Patagonia",
-      expires: "En 5 días"
+      expires: "En 5 días",
     },
     {
       logo: dia,
       title: "25% de reintegro en tiendas DIA",
       bank: "Santander MODO",
-      expires: "En 2 días"
+      expires: "En 2 días",
     },
     {
       logo: jumbo,
       title: "30% OFF en Jumbo y Disco",
       bank: "Galicia MODO",
-      expires: "Hoy"
-    }
+      expires: "Hoy",
+    },
   ];
 
   const faqs = [
     {
       question: "¿Cómo funciona SaveApp?",
-      answer: "SaveApp recopila automáticamente todas las ofertas y promociones de tus tarjetas bancarias y las presenta de forma organizada en una sola aplicación. Recibirás notificaciones personalizadas según tus preferencias."
+      answer:
+        "SaveApp recopila automáticamente todas las ofertas y promociones de tus tarjetas bancarias y las presenta de forma organizada en una sola aplicación. Recibirás notificaciones personalizadas según tus preferencias.",
     },
     {
       question: "¿Es seguro conectar mis tarjetas?",
-      answer: "Absolutamente. Utilizamos encriptación de nivel bancario y nunca almacenamos tus datos sensibles. Solo accedemos a la información de ofertas y promociones."
+      answer:
+        "Absolutamente. Utilizamos encriptación de nivel bancario y nunca almacenamos tus datos sensibles. Solo accedemos a la información de ofertas y promociones.",
     },
     {
       question: "¿Qué bancos están disponibles?",
-      answer: "Actualmente trabajamos con los 10 principales bancos del país. Continuamente agregamos nuevas instituciones para ampliar nuestra cobertura."
-    }
+      answer:
+        "Actualmente trabajamos con los 10 principales bancos del país. Continuamente agregamos nuevas instituciones para ampliar nuestra cobertura.",
+    },
   ];
 
   // Array con los logos de los bancos usando imágenes locales (sin nombres)
@@ -122,20 +137,29 @@ function App() {
             <div className="flex items-center">
               <img src={logo} alt="Logo SaveApp" className="h-8 w-auto" />
             </div>
-            
+
             <div className="flex items-center md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-400 hover:text-white"
-              >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                className="text-gray-400 hover:text-white">
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </button>
             </div>
 
             <div className="hidden md:flex md:items-center md:space-x-8">
-              <a href="#beneficios" className="text-gray-300 hover:text-white">Beneficios</a>
-              <a href="#bancos" className="text-gray-300 hover:text-white">Bancos disponibles</a>
-              <a href="#faq" className="text-gray-300 hover:text-white">FAQ</a>
+              <a href="#beneficios" className="text-gray-300 hover:text-white">
+                Beneficios
+              </a>
+              <a href="#bancos" className="text-gray-300 hover:text-white">
+                Bancos disponibles
+              </a>
+              <a href="#faq" className="text-gray-300 hover:text-white">
+                FAQ
+              </a>
             </div>
           </div>
         </div>
@@ -143,10 +167,24 @@ function App() {
         {isMenuOpen && (
           <div className="md:hidden bg-gray-900 border-t border-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#beneficios" className="block px-3 py-2 text-gray-300 hover:text-white">Beneficios</a>
-              <a href="#bancos" className="block px-3 py-2 text-gray-300 hover:text-white">Bancos disponibles</a>
-              <a href="#faq" className="block px-3 py-2 text-gray-300 hover:text-white">FAQ</a>
-              <button onClick={() => setIsWaitlistOpen(true)} className="w-full mt-2 bg-primary text-gray-900 px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+              <a
+                href="#beneficios"
+                className="block px-3 py-2 text-gray-300 hover:text-white">
+                Beneficios
+              </a>
+              <a
+                href="#bancos"
+                className="block px-3 py-2 text-gray-300 hover:text-white">
+                Bancos disponibles
+              </a>
+              <a
+                href="#faq"
+                className="block px-3 py-2 text-gray-300 hover:text-white">
+                FAQ
+              </a>
+              <button
+                onClick={() => setIsWaitlistOpen(true)}
+                className="w-full mt-2 bg-primary text-gray-900 px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
                 Unirse a la waitlist
               </button>
             </div>
@@ -167,10 +205,13 @@ function App() {
                 un solo lugar
               </h1>
               <p className="mt-6 text-xl text-gray-400">
-                Descubre y aprovecha todas las promociones de tus tarjetas bancarias de forma fácil y organizada.
+                Descubre y aprovecha todas las promociones de tus tarjetas
+                bancarias de forma fácil y organizada.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <button onClick={() => setIsWaitlistOpen(true)} className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center">
+                <button
+                  onClick={() => setIsWaitlistOpen(true)}
+                  className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center">
                   Unirse a la waitlist
                 </button>
               </div>
@@ -190,16 +231,26 @@ function App() {
                   </div>
                   <div className="space-y-3">
                     {mockOffers.map((offer, index) => (
-                      <div key={index} className="bg-gray-800/50 p-4 rounded-xl card-gradient">
+                      <div
+                        key={index}
+                        className="bg-gray-800/50 p-4 rounded-xl card-gradient">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-3">
-                            <img src={offer.logo} alt="" className="w-10 h-10 rounded-full" />
+                            <img
+                              src={offer.logo}
+                              alt=""
+                              className="w-10 h-10 rounded-full"
+                            />
                             <div>
                               <h3 className="font-medium">{offer.title}</h3>
-                              <p className="text-sm text-gray-400">{offer.bank}</p>
+                              <p className="text-sm text-gray-400">
+                                {offer.bank}
+                              </p>
                             </div>
                           </div>
-                          <span className="text-xs text-primary">{offer.expires}</span>
+                          <span className="text-xs text-primary">
+                            {offer.expires}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -225,7 +276,9 @@ function App() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
-              <div key={index} className="p-6 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-primary/50 transition-colors">
+              <div
+                key={index}
+                className="p-6 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-primary/50 transition-colors">
                 <div className="mb-4">{benefit.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
                 <p className="text-gray-400">{benefit.description}</p>
@@ -261,15 +314,18 @@ function App() {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border border-gray-800 rounded-xl overflow-hidden">
+              <div
+                key={index}
+                className="border border-gray-800 rounded-xl overflow-hidden">
                 <button
                   className="w-full px-6 py-4 flex justify-between items-center bg-gray-900/50"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className="font-semibold text-left">{faq.question}</span>
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}>
+                  <span className="font-semibold text-left">
+                    {faq.question}
+                  </span>
                   <ChevronDown
                     className={`w-5 h-5 text-primary transform transition-transform ${
-                      openFaq === index ? 'rotate-180' : ''
+                      openFaq === index ? "rotate-180" : ""
                     }`}
                   />
                 </button>
@@ -291,9 +347,12 @@ function App() {
             Comienza a ahorrar hoy mismo
           </h2>
           <p className="text-xl text-gray-400 mb-8">
-            Únete a miles de usuarios que ya están aprovechando al máximo sus tarjetas
+            Únete a miles de usuarios que ya están aprovechando al máximo sus
+            tarjetas
           </p>
-          <button onClick={() => setIsWaitlistOpen(true)} className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors inline-flex items-center">
+          <button
+            onClick={() => setIsWaitlistOpen(true)}
+            className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors inline-flex items-center">
             Unirse a la waitlist
           </button>
         </div>
@@ -302,12 +361,16 @@ function App() {
       {/* Waitlist Modal */}
       {isWaitlistOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute inset-0 bg-black opacity-50" onClick={() => setIsWaitlistOpen(false)}></div>
+          <div
+            className="absolute inset-0 bg-black opacity-50"
+            onClick={() => setIsWaitlistOpen(false)}></div>
           <div className="bg-gray-900 rounded-xl p-6 z-10 w-full max-w-md mx-4">
             <h2 className="text-2xl font-bold mb-4">Unirse a la waitlist</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-300 mb-1" htmlFor="email">Email</label>
+                <label className="block text-gray-300 mb-1" htmlFor="email">
+                  Email
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -318,7 +381,9 @@ function App() {
                 />
               </div>
               <div>
-                <label className="block text-gray-300 mb-1" htmlFor="cardCount">Cantidad de tarjetas (débito, crédito o billeteras virtuales)</label>
+                <label className="block text-gray-300 mb-1" htmlFor="cardCount">
+                  Cantidad de tarjetas (débito, crédito o billeteras virtuales)
+                </label>
                 <input
                   type="number"
                   id="cardCount"
@@ -329,7 +394,9 @@ function App() {
                 />
               </div>
               <div>
-                <label className="block text-gray-300 mb-1" htmlFor="banks">Banco o bancos que utilizas (separalos con coma)</label>
+                <label className="block text-gray-300 mb-1" htmlFor="banks">
+                  Banco o bancos que utilizas (separalos con coma)
+                </label>
                 <input
                   type="text"
                   id="banks"
@@ -340,15 +407,47 @@ function App() {
                 />
               </div>
               <div>
-                <label className="block text-gray-300 mb-1">¿Permitirías a la app acceder a tu ubicación?</label>
+                <label className="block text-gray-300 mb-1">
+                  ¿Permitirías a la app acceder a tu ubicación?
+                </label>
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="location"
+                      value="yes"
+                      checked={location === "yes"}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="mr-2"
+                    />
+                    Sí
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="location"
+                      value="no"
+                      checked={location === "no"}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="mr-2"
+                    />
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1">
+                  ¿Abrirías una cueta en otro banco (de manera gratuita) para
+                  acceder a un buen descuento?
+                </label>
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center">
                     <input
                       type="radio"
                       name="wouldUseApp"
                       value="yes"
-                      checked={wouldUseApp === 'yes'}
-                      onChange={() => setWouldUseApp('yes')}
+                      checked={wouldUseApp === "yes"}
+                      onChange={() => setWouldUseApp("yes")}
                       className="mr-2"
                     />
                     Sí
@@ -358,8 +457,8 @@ function App() {
                       type="radio"
                       name="wouldUseApp"
                       value="no"
-                      checked={wouldUseApp === 'no'}
-                      onChange={() => setWouldUseApp('no')}
+                      checked={wouldUseApp === "no"}
+                      onChange={() => setWouldUseApp("no")}
                       className="mr-2"
                     />
                     No
@@ -367,47 +466,26 @@ function App() {
                 </div>
               </div>
               <div>
-                <label className="block text-gray-300 mb-1">¿Abrirías una cueta en otro banco (de manera gratuita) para acceder a un buen descuento?</label>
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="wouldUseApp"
-                      value="yes"
-                      checked={wouldUseApp === 'yes'}
-                      onChange={() => setWouldUseApp('yes')}
-                      className="mr-2"
-                    />
-                    Sí
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="wouldUseApp"
-                      value="no"
-                      checked={wouldUseApp === 'no'}
-                      onChange={() => setWouldUseApp('no')}
-                      className="mr-2"
-                    />
-                    No
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label className="block text-gray-300 mb-1" htmlFor="functionalities">¿Qué funcionalidades te gustaría que incluya la app?</label>
+                <label className="block text-gray-300 mb-1" htmlFor="features">
+                  ¿Qué funcionalidades te gustaría que incluya la app?
+                </label>
                 <textarea
-                  id="functionalities"
-                  value={functionalities}
-                  onChange={(e) => setFunctionalities(e.target.value)}
+                  id="features"
+                  value={features}
+                  onChange={(e) => setfeatures(e.target.value)}
                   required
-                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"
-                ></textarea>
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"></textarea>
               </div>
               <div className="flex justify-end space-x-4">
-                <button type="button" onClick={() => setIsWaitlistOpen(false)} className="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setIsWaitlistOpen(false)}
+                  className="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors">
                   Cancelar
                 </button>
-                <button type="submit" className="px-4 py-2 bg-primary text-gray-900 rounded hover:bg-primary-dark transition-colors">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-primary text-gray-900 rounded hover:bg-primary-dark transition-colors">
                   Enviar
                 </button>
               </div>
@@ -418,7 +496,7 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-gray-900/50 py-12 border-t mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2025 SaveApp. Todos los derechos reservados.</p>
+        <p>&copy; 2025 SaveApp. Todos los derechos reservados.</p>
       </footer>
     </div>
   );
