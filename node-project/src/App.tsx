@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "./assets/logo.png"; // Asegúrate de que la ruta sea correcta
 // Importa los logos de los bancos (imágenes locales)
 import banco1 from "./assets/banco1.png";
@@ -24,6 +24,7 @@ import {
   Star,
   HelpCircle,
   Plus,
+  Loader2
 } from "lucide-react";
 
 function App() {
@@ -39,9 +40,29 @@ function App() {
   const [location, setLocation] = useState("");
   const [wouldUseApp, setWouldUseApp] = useState("");
   const [features, setfeatures] = useState("");
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [animateClass, setAnimateClass] = useState("");
+
+  useEffect(() => {
+    if (submissionSuccess) {
+      setAnimateClass("slide-in");
+      const exitTimer = setTimeout(() => {
+        setAnimateClass("slide-out");
+      }, 2500);
+      const hideTimer = setTimeout(() => {
+        setSubmissionSuccess(false);
+      }, 3000);
+      return () => {
+        clearTimeout(exitTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [submissionSuccess]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const formData = {
       email,
       cardCount,
@@ -57,10 +78,14 @@ function App() {
       body: JSON.stringify(formData),
     })
       .then(() => {
-        alert("¡Gracias por unirte a la waitlist!");
+        setSubmissionSuccess(true);
         setIsWaitlistOpen(false);
+        setIsSubmitting(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setIsSubmitting(false);
+      });
   };
 
   const benefits = [
@@ -130,6 +155,22 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      <style>{`
+  @keyframes slideIn {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100%); opacity: 0; }
+  }
+  .slide-in {
+    animation: slideIn 0.5s forwards;
+  }
+  .slide-out {
+    animation: slideOut 0.5s forwards;
+  }
+`}</style>
       {/* Navigation */}
       <nav className="bg-gray-950/50 backdrop-blur-lg fixed w-full z-50 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -191,6 +232,12 @@ function App() {
           </div>
         )}
       </nav>
+
+      {submissionSuccess && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 bg-primary text-black p-4 rounded shadow-lg z-50 ${animateClass}`}>
+          ¡Gracias por unirte a la waitlist!
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 hero-gradient">
@@ -324,9 +371,8 @@ function App() {
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-primary transform transition-transform ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
+                    className={`w-5 h-5 text-primary transform transition-transform ${openFaq === index ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
                 {openFaq === index && (
@@ -364,12 +410,12 @@ function App() {
           <div
             className="absolute inset-0 bg-black opacity-50"
             onClick={() => setIsWaitlistOpen(false)}></div>
-          <div className="bg-gray-900 rounded-xl p-6 z-10 w-full max-w-md mx-4">
+          <div className="bg-gray-900 rounded-xl p-6 z-10 w-full max-w-md mx-4 max-h-screen overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Unirse a la waitlist</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-300 mb-1" htmlFor="email">
-                  Email
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -382,7 +428,7 @@ function App() {
               </div>
               <div>
                 <label className="block text-gray-300 mb-1" htmlFor="cardCount">
-                  Cantidad de tarjetas (débito, crédito o billeteras virtuales)
+                  Cantidad de tarjetas (débito, crédito o billeteras virtuales) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -395,7 +441,7 @@ function App() {
               </div>
               <div>
                 <label className="block text-gray-300 mb-1" htmlFor="banks">
-                  Banco o bancos que utilizas (separalos con coma)
+                  Banco o bancos que utilizas (separalos con coma) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -408,7 +454,7 @@ function App() {
               </div>
               <div>
                 <label className="block text-gray-300 mb-1">
-                  ¿Permitirías a la app acceder a tu ubicación?
+                  ¿Permitirías a la app acceder a tu ubicación?<span className="text-red-500"> *</span>
                 </label>
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center">
@@ -418,6 +464,7 @@ function App() {
                       value="yes"
                       checked={location === "yes"}
                       onChange={(e) => setLocation(e.target.value)}
+                      required
                       className="mr-2"
                     />
                     Sí
@@ -429,6 +476,7 @@ function App() {
                       value="no"
                       checked={location === "no"}
                       onChange={(e) => setLocation(e.target.value)}
+                      required
                       className="mr-2"
                     />
                     No
@@ -438,7 +486,7 @@ function App() {
               <div>
                 <label className="block text-gray-300 mb-1">
                   ¿Abrirías una cueta en otro banco (de manera gratuita) para
-                  acceder a un buen descuento?
+                  acceder a un buen descuento?<span className="text-red-500"> *</span>
                 </label>
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center">
@@ -448,6 +496,7 @@ function App() {
                       value="yes"
                       checked={wouldUseApp === "yes"}
                       onChange={() => setWouldUseApp("yes")}
+                      required
                       className="mr-2"
                     />
                     Sí
@@ -459,6 +508,7 @@ function App() {
                       value="no"
                       checked={wouldUseApp === "no"}
                       onChange={() => setWouldUseApp("no")}
+                      required
                       className="mr-2"
                     />
                     No
@@ -473,7 +523,6 @@ function App() {
                   id="features"
                   value={features}
                   onChange={(e) => setfeatures(e.target.value)}
-                  required
                   className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"></textarea>
               </div>
               <div className="flex justify-end space-x-4">
@@ -485,8 +534,15 @@ function App() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-primary text-gray-900 rounded hover:bg-primary-dark transition-colors">
-                  Enviar
+                  disabled={isSubmitting}
+                  className="px-4 py-2 bg-primary text-gray-900 rounded hover:bg-primary-dark transition-colors flex items-center justify-center gap-2">
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="animate-spin h-5 w-5" /> Enviando...
+                    </>
+                  ) : (
+                    "Enviar"
+                  )}
                 </button>
               </div>
             </form>
