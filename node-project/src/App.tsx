@@ -13,12 +13,10 @@ import jumbo from './assets/jumbo.png';
 
 import {
   Bell,
-  DollarSign,
   Clock,
   Tags,
   Building2,
   ChevronDown,
-  Download,
   Menu,
   X,
   Search,
@@ -31,6 +29,27 @@ import {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
+  const [isWaitlistOpen, setIsWaitlistOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [cardCount, setCardCount] = React.useState('');
+  const [banks, setBanks] = React.useState('');
+  const [wouldUseApp, setWouldUseApp] = React.useState('yes');
+  const [functionalities, setFunctionalities] = React.useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = { email, cardCount, banks, wouldUseApp, functionalities };
+    fetch('https://script.google.com/a/macros/ucc.edu.ar/s/AKfycbztaPwk6I9kI_UV97ldrrAbpBUMvRCG8zsUD1lfC_oraRf-ZF0Y8AJ4pukJpeavtwQ/exec', { // Reemplaza con la URL del despliegue de tu Apps Script
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+      .then(() => {
+        alert('¡Gracias por unirte a la waitlist!');
+        setIsWaitlistOpen(false);
+      })
+      .catch((err) => console.error(err));
+  };
 
   const benefits = [
     {
@@ -127,14 +146,9 @@ function App() {
               <a href="#beneficios" className="block px-3 py-2 text-gray-300 hover:text-white">Beneficios</a>
               <a href="#bancos" className="block px-3 py-2 text-gray-300 hover:text-white">Bancos disponibles</a>
               <a href="#faq" className="block px-3 py-2 text-gray-300 hover:text-white">FAQ</a>
-              <a
-                href="https://forms.gle/6kvgUmG5HpzsjoJt7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full mt-2 bg-primary text-gray-900 px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
-              >
+              <button onClick={() => setIsWaitlistOpen(true)} className="w-full mt-2 bg-primary text-gray-900 px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
                 Unirse a la waitlist
-              </a>
+              </button>
             </div>
           </div>
         )}
@@ -156,14 +170,9 @@ function App() {
                 Descubre y aprovecha todas las promociones de tus tarjetas bancarias de forma fácil y organizada.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://forms.gle/6kvgUmG5HpzsjoJt7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center"
-                >
+                <button onClick={() => setIsWaitlistOpen(true)} className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center">
                   Unirse a la waitlist
-                </a>
+                </button>
               </div>
             </div>
             <div className="relative">
@@ -284,16 +293,128 @@ function App() {
           <p className="text-xl text-gray-400 mb-8">
             Únete a miles de usuarios que ya están aprovechando al máximo sus tarjetas
           </p>
-          <a
-            href="https://forms.gle/6kvgUmG5HpzsjoJt7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors inline-flex items-center"
-          >
+          <button onClick={() => setIsWaitlistOpen(true)} className="bg-primary text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-dark transition-colors inline-flex items-center">
             Unirse a la waitlist
-          </a>
+          </button>
         </div>
       </section>
+
+      {/* Waitlist Modal */}
+      {isWaitlistOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-black opacity-50" onClick={() => setIsWaitlistOpen(false)}></div>
+          <div className="bg-gray-900 rounded-xl p-6 z-10 w-full max-w-md mx-4">
+            <h2 className="text-2xl font-bold mb-4">Unirse a la waitlist</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-gray-300 mb-1" htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1" htmlFor="cardCount">Cantidad de tarjetas (débito, crédito o billeteras virtuales)</label>
+                <input
+                  type="number"
+                  id="cardCount"
+                  value={cardCount}
+                  onChange={(e) => setCardCount(e.target.value)}
+                  required
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1" htmlFor="banks">Banco o bancos que utilizas (separalos con coma)</label>
+                <input
+                  type="text"
+                  id="banks"
+                  value={banks}
+                  onChange={(e) => setBanks(e.target.value)}
+                  required
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1">¿Permitirías a la app acceder a tu ubicación?</label>
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="wouldUseApp"
+                      value="yes"
+                      checked={wouldUseApp === 'yes'}
+                      onChange={() => setWouldUseApp('yes')}
+                      className="mr-2"
+                    />
+                    Sí
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="wouldUseApp"
+                      value="no"
+                      checked={wouldUseApp === 'no'}
+                      onChange={() => setWouldUseApp('no')}
+                      className="mr-2"
+                    />
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1">¿Abrirías una cueta en otro banco (de manera gratuita) para acceder a un buen descuento?</label>
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="wouldUseApp"
+                      value="yes"
+                      checked={wouldUseApp === 'yes'}
+                      onChange={() => setWouldUseApp('yes')}
+                      className="mr-2"
+                    />
+                    Sí
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="wouldUseApp"
+                      value="no"
+                      checked={wouldUseApp === 'no'}
+                      onChange={() => setWouldUseApp('no')}
+                      className="mr-2"
+                    />
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="block text-gray-300 mb-1" htmlFor="functionalities">¿Qué funcionalidades te gustaría que incluya la app?</label>
+                <textarea
+                  id="functionalities"
+                  value={functionalities}
+                  onChange={(e) => setFunctionalities(e.target.value)}
+                  required
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary"
+                ></textarea>
+              </div>
+              <div className="flex justify-end space-x-4">
+                <button type="button" onClick={() => setIsWaitlistOpen(false)} className="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors">
+                  Cancelar
+                </button>
+                <button type="submit" className="px-4 py-2 bg-primary text-gray-900 rounded hover:bg-primary-dark transition-colors">
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-gray-900/50 py-12 border-t mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
