@@ -2,15 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
-import { useTheme } from "@/lib/theme-context"
 import { translations } from "@/lib/translations"
 import SaveAppLogo from "./saveapp-logo"
 import ModernButton from "./modern-button"
-import LanguageSelector from "./language-selector"
 
 export default function ModernHeader() {
-  const { language } = useTheme()
-  const t = translations[language]
+  const t = translations.es
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -56,7 +53,6 @@ export default function ModernHeader() {
 
           {/* Right Side Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            <LanguageSelector />
             <ModernButton onClick={() => scrollToSection("waitlist")} size="sm" className="raycast-waitlist-button">
               Waitlist
             </ModernButton>
@@ -64,7 +60,6 @@ export default function ModernHeader() {
 
           {/* Mobile Menu Button */}
           <div className="flex items-center space-x-2 lg:hidden">
-            <LanguageSelector />
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="raycast-mobile-menu-button">
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

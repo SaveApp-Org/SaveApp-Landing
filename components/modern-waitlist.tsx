@@ -20,8 +20,7 @@ type WaitlistStep = "initial" | "complete"
 const banks = ["Santander", "Galicia", "BBVA", "Macro", "Nación", "Uala", "Naranja X", "Mercado Pago", "Otros"]
 
 export default function ModernWaitlist() {
-  const { theme, language } = useTheme()
-  const t = translations[language]
+  const t = translations.es
   const [step, setStep] = useState<WaitlistStep>("initial")
   const [email, setEmail] = useState("")
   const [selectedBanks, setSelectedBanks] = useState<string[]>([])

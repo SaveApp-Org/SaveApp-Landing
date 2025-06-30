@@ -3,34 +3,36 @@
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
 
-type Language = "en" | "es"
+// Solo contexto de tema
+
+type Theme = "dark" | "light"
 
 interface ThemeContextType {
-  language: Language
-  toggleLanguage: () => void
+  theme: Theme
+  toggleTheme: () => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("es")
+  const [theme, setTheme] = useState<Theme>("dark")
 
   useEffect(() => {
-    // Load saved language preference
-    const savedLanguage = localStorage.getItem("saveapp-language") as Language
-    if (savedLanguage) setLanguage(savedLanguage)
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem("saveapp-theme") as Theme
+    if (savedTheme) setTheme(savedTheme)
   }, [])
 
   useEffect(() => {
-    // Save language preference
-    localStorage.setItem("saveapp-language", language)
-  }, [language])
+    // Save theme preference
+    localStorage.setItem("saveapp-theme", theme)
+  }, [theme])
 
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "es" ? "en" : "es"))
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"))
   }
 
-  return <ThemeContext.Provider value={{ language, toggleLanguage }}>{children}</ThemeContext.Provider>
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }
 
 export function useTheme() {

@@ -35,7 +35,7 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
         onClick={handleAppStoreClick}
         disabled={disabled}
         className={`download-button app-store ${sizeClasses[size]} ${disabled ? "disabled" : ""}`}
-        aria-label={language === "es" ? "Descargar en App Store" : "Download on App Store"}
+        aria-label="Descargar en App Store"
       >
         <div className="download-button-content">
           <div className="store-icon">
@@ -45,13 +45,13 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
             </svg>
           </div>
           <div className="store-text">
-            <div className="store-subtitle">{language === "es" ? "Descargar en" : "Download on the"}</div>
+            <div className="store-subtitle">Descargar en</div>
             <div className="store-title">App Store</div>
           </div>
         </div>
         {disabled && (
           <div className="coming-soon-overlay">
-            <span>{language === "es" ? "Próximamente" : "Coming Soon"}</span>
+            <span>Próximamente</span>
           </div>
         )}
       </button>
@@ -60,7 +60,7 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
         onClick={handlePlayStoreClick}
         disabled={disabled}
         className={`download-button play-store ${sizeClasses[size]} ${disabled ? "disabled" : ""}`}
-        aria-label={language === "es" ? "Disponible en Google Play" : "Get it on Google Play"}
+        aria-label="Disponible en Google Play"
       >
         <div className="download-button-content">
           <div className="store-icon">
@@ -70,13 +70,13 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
             </svg>
           </div>
           <div className="store-text">
-            <div className="store-subtitle">{language === "es" ? "Disponible en" : "Get it on"}</div>
+            <div className="store-subtitle">Disponible en</div>
             <div className="store-title">Google Play</div>
           </div>
         </div>
         {disabled && (
           <div className="coming-soon-overlay">
-            <span>{language === "es" ? "Próximamente" : "Coming Soon"}</span>
+            <span>Próximamente</span>
           </div>
         )}
       </button>

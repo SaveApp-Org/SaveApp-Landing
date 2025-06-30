@@ -31,8 +31,7 @@ export default function ModernButton({
   className = "",
   type = "button",
 }: ModernButtonProps) {
-  const { language } = useTheme()
-  const t = translations[language]
+  const t = translations.es
 
   const baseClasses =
     "font-semibold transition-all duration-300 hover:scale-105 focus:scale-105 active:scale-95 border-0"
@@ -70,7 +69,7 @@ export default function ModernButton({
         {loading ? (
           <>
             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            {language === "es" ? "Cargando..." : "Loading..."}
+            {"Cargando..."}
           </>
         ) : (
           children

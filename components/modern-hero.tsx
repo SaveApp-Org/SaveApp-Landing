@@ -6,8 +6,7 @@ import { translations } from "@/lib/translations"
 import ModernButton from "./modern-button"
 
 export default function ModernHero() {
-  const { language } = useTheme()
-  const t = translations[language]
+  const t = translations.es
 
   const scrollToWaitlist = () => {
     const element = document.getElementById("waitlist")
@@ -39,19 +38,7 @@ export default function ModernHero() {
               {/* Main Headline */}
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                  {language === "es" ? (
-                    <>
-                      Todos los <span className="gradient-text">descuentos</span>
-                      <br />
-                      en un solo lugar
-                    </>
-                  ) : (
-                    <>
-                      All <span className="gradient-text">discounts</span>
-                      <br />
-                      in one place
-                    </>
-                  )}
+                  {<>Todos los <span className="gradient-text">descuentos</span><br />en un solo lugar</>}
                 </h1>
                 <p className="text-xl lg:text-2xl text-slate-400 leading-relaxed max-w-2xl">{t.heroSubtitle}</p>
               </div>
