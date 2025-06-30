@@ -4,9 +4,11 @@ import { ArrowRight, Zap, Shield, TrendingUp } from "lucide-react"
 import { useTheme } from "@/lib/theme-context"
 import { translations } from "@/lib/translations"
 import ModernButton from "./modern-button"
+import { useRouter } from "next/navigation"
 
 export default function ModernHero() {
   const t = translations.es
+  const router = useRouter();
 
   const scrollToWaitlist = () => {
     const element = document.getElementById("waitlist")
@@ -60,7 +62,7 @@ export default function ModernHero() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <ModernButton
-                  onClick={scrollToWaitlist}
+                  onClick={() => router.push("/waitlist")}
                   size="lg"
                   className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 h-14"
                 >

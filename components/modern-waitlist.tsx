@@ -42,11 +42,6 @@ export default function ModernWaitlist() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
       setStep("complete")
-
-      // Show survey popup after a brief delay
-      setTimeout(() => {
-        setShowSurveyPopup(true)
-      }, 1500)
     } catch (error) {
       console.error("Error joining waitlist:", error)
       setError("Error de conexión. Por favor intenta nuevamente.")
@@ -87,57 +82,51 @@ export default function ModernWaitlist() {
 
   if (step === "complete") {
     return (
-      <>
-        <section id="waitlist" className="py-20 lg:py-32 relative overflow-hidden">
-          {/* Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-float"></div>
-            <div
-              className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"
-              style={{ animationDelay: "2s" }}
-            ></div>
+      <div className="min-h-[calc(100vh-80px)] flex flex-col justify-center items-center bg-slate-950 relative overflow-hidden pt-20">
+        {/* Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
+        </div>
+        <div className="z-10 w-full max-w-2xl mx-auto text-center px-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full mb-8 animate-glow">
+            <CheckCircle className="w-10 h-10 text-white" />
           </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full mb-8 animate-glow">
-                <CheckCircle className="w-10 h-10 text-white" />
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            {surveyCompleted ? "¡Excelente! Posición prioritaria asegurada" : "¡Bienvenido a la waitlist!"}
+          </h2>
+          <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+            {surveyCompleted
+              ? "Has avanzado significativamente en la lista y serás de los primeros en acceder a SaveApp."
+              : "Te hemos agregado a nuestra lista de espera. Te notificaremos cuando la beta esté lista."}
+          </p>
+          <div className="mb-8">
+            {surveyCompleted ? (
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg animate-glow">
+                <Star className="w-5 h-5 fill-current" />
+                <span>Posición prioritaria</span>
               </div>
-
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                {surveyCompleted ? "¡Excelente! Posición prioritaria asegurada" : "¡Bienvenido a la waitlist!"}
-              </h2>
-
-              <p className="text-xl text-slate-400 mb-8 leading-relaxed">
-                {surveyCompleted
-                  ? "Has avanzado significativamente en la lista y serás de los primeros en acceder a SaveApp."
-                  : "Te hemos agregado a nuestra lista de espera. Te notificaremos cuando la beta esté lista."}
-              </p>
-
-              <div className="mb-8">
-                {surveyCompleted ? (
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg animate-glow">
-                    <Star className="w-5 h-5 fill-current" />
-                    <span>Posición prioritaria</span>
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 glass border border-slate-700/50 text-teal-400 px-6 py-3 rounded-full font-semibold">
-                    <Sparkles className="w-5 h-5" />
-                    <span>En lista de espera</span>
-                  </div>
-                )}
+            ) : (
+              <div className="inline-flex items-center gap-2 glass border border-slate-700/50 text-teal-400 px-6 py-3 rounded-full font-semibold">
+                <Sparkles className="w-5 h-5" />
+                <span>En lista de espera</span>
               </div>
-
-              {!surveyCompleted && (
-                <ModernButton onClick={() => setShowSurveyPopup(true)}>
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  {t.advanceInList}
-                </ModernButton>
-              )}
-            </div>
+            )}
           </div>
-        </section>
-
+          {/* Texto shimmer para avanzar en la lista */}
+          {!surveyCompleted && (
+            <button
+              type="button"
+              onClick={() => setShowSurveyPopup(true)}
+              className="mt-2 mx-auto block text-lg font-semibold relative shimmer-text text-white/90 hover:text-white transition-colors"
+              style={{ outline: "none", border: "none", background: "none", cursor: "pointer" }}
+            >
+              <span className="inline-block">
+                Avanzar en la lista respondiendo 3 preguntas
+              </span>
+            </button>
+          )}
+        </div>
         {/* Survey Popup Modal */}
         <Dialog open={showSurveyPopup} onOpenChange={setShowSurveyPopup}>
           <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -292,32 +281,26 @@ export default function ModernWaitlist() {
             </div>
           </DialogContent>
         </Dialog>
-      </>
+      </div>
     )
   }
 
   return (
-    <section id="waitlist" className="py-20 lg:py-32 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-80px)] flex flex-col justify-center items-center bg-slate-950 relative overflow-hidden pt-20">
       {/* Background Elements */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-float"></div>
-        <div
-          className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "2s" }}
-        ></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }}></div>
       </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               {t.waitlistTitle} <span className="gradient-text">{t.trySaveApp}</span>
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.waitlistSubtitle}</p>
           </div>
-
           {/* Waitlist Form */}
           <div className="max-w-2xl mx-auto">
             <Card className="glass border-slate-700/50">
@@ -331,7 +314,6 @@ export default function ModernWaitlist() {
                     </div>
                   </div>
                 )}
-
                 <form onSubmit={handleInitialSubmit} className="space-y-6">
                   <div>
                     <Input
@@ -343,7 +325,6 @@ export default function ModernWaitlist() {
                       className="bg-slate-800/50 border-slate-600 text-white placeholder-slate-400 h-14 text-lg focus:border-teal-500 focus:ring-teal-500 rounded-xl"
                     />
                   </div>
-
                   <ModernButton
                     type="submit"
                     disabled={isLoading || !email}
@@ -354,7 +335,6 @@ export default function ModernWaitlist() {
                     {t.joinWaitlistButton}
                   </ModernButton>
                 </form>
-
                 {/* Download Section - Coming Soon */}
                 <div className="mt-12 text-center">
                   <p className="text-slate-400 mb-6 font-medium">{t.availableSoon}</p>
@@ -365,6 +345,6 @@ export default function ModernWaitlist() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

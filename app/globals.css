@@ -421,3 +421,28 @@
     animation: none;
   }
 }
+
+/* Shimmer effect for waitlist advance text */
+.shimmer-text {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-text span {
+  position: relative;
+  z-index: 1;
+}
+.shimmer-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+  animation: shimmer-move 2s infinite;
+  z-index: 2;
+}
+@keyframes shimmer-move {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
