@@ -425,24 +425,37 @@
 /* Shimmer effect for waitlist advance text */
 .shimmer-text {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  display: inline-flex;
+  align-items: center;
 }
-.shimmer-text span {
+.shimmer-text-inner {
   position: relative;
   z-index: 1;
+  background: linear-gradient(90deg, #fff 0%, #14b8a6 50%, #fff 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-text-move 2s infinite linear;
 }
-.shimmer-text::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
-  animation: shimmer-move 2s infinite;
-  z-index: 2;
+@keyframes shimmer-text-move {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
-@keyframes shimmer-move {
-  0% { left: -75%; }
-  100% { left: 125%; }
+.shimmer-arrow {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #14b8a6;
+  opacity: 0.8;
+  margin-left: 2px;
+  /* animation: shimmer-arrow-move 1.2s infinite; */
+}
+.shimmer-arrow-1 {
+  /* animation-delay: 0.3s; */
+}
+.shimmer-arrow-2 {
+  /* animation-delay: 0.6s; */
 }

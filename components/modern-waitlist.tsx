@@ -121,8 +121,8 @@ export default function ModernWaitlist() {
               className="mt-2 mx-auto block text-lg font-semibold relative shimmer-text text-white/90 hover:text-white transition-colors"
               style={{ outline: "none", border: "none", background: "none", cursor: "pointer" }}
             >
-              <span className="inline-block">
-                Avanzar en la lista respondiendo 3 preguntas
+              <span className="inline-block shimmer-text-inner">
+                Avanzar en la lista respondiendo 3 preguntas &gt; &gt;
               </span>
             </button>
           )}
@@ -136,8 +136,8 @@ export default function ModernWaitlist() {
                   <Gift className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <DialogTitle className="text-2xl font-bold text-white">{t.advanceWaitlistTitle}</DialogTitle>
-                  <DialogDescription className="text-slate-300 mt-1">{t.advanceWaitlistSubtitle}</DialogDescription>
+                  <DialogTitle className="text-2xl font-bold text-white">{t.advanceInWaitlist}</DialogTitle>
+                  <DialogDescription className="text-slate-300 mt-1">{t.completeSurvey}</DialogDescription>
                 </div>
               </div>
             </DialogHeader>
@@ -152,27 +152,13 @@ export default function ModernWaitlist() {
               </div>
             )}
 
-            {/* Benefits Banner */}
-            <div className="bg-gradient-to-r from-teal-500/20 to-blue-500/20 rounded-lg p-4 mb-6 border border-teal-500/30">
-              <div className="flex items-center gap-3 mb-2">
-                <Star className="w-5 h-5 text-teal-400 fill-current" />
-                <span className="font-semibold text-teal-400">{t.surveyBenefitsTitle}:</span>
-              </div>
-              <ul className="text-sm text-slate-300 space-y-1 ml-8">
-                <li>• {t.surveyBenefit1}</li>
-                <li>• {t.surveyBenefit2}</li>
-                <li>• {t.surveyBenefit3}</li>
-                <li>• {t.surveyBenefit4}</li>
-              </ul>
-            </div>
-
             <form onSubmit={handleSurveySubmit} className="space-y-6">
               {/* Banks Question */}
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <Building2 className="w-5 h-5 text-teal-400" />
                   <Label className="text-lg font-semibold text-white">{t.banksQuestion}</Label>
-                  <span className="text-sm text-slate-400">({t.selectAll})</span>
+                  <span className="text-sm text-slate-400">{t.selectAllApply}</span>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {banks.map((bank) => (
@@ -181,7 +167,7 @@ export default function ModernWaitlist() {
                         id={bank}
                         checked={selectedBanks.includes(bank)}
                         onCheckedChange={(checked) => handleBankChange(bank, checked as boolean)}
-                        className="border-slate-600 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-500"
+                        className="border-slate-600 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-500 rounded-sm"
                       />
                       <Label htmlFor={bank} className="text-slate-300 cursor-pointer text-sm">
                         {bank}
@@ -199,26 +185,26 @@ export default function ModernWaitlist() {
                 </div>
                 <div className="glass rounded-lg p-3 mb-4 border border-slate-700">
                   <p className="text-sm text-slate-300">
-                    <strong className="text-teal-400">{t.whyUseful}</strong> {t.locationQuestionDescription}
+                    <strong className="text-teal-400">{t.whyUseful}</strong> {t.locationExplanation}
                   </p>
                 </div>
                 <RadioGroup value={shareLocation} onValueChange={setShareLocation}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="yes" id="location-yes" className="border-slate-600 text-teal-500" />
                     <Label htmlFor="location-yes" className="text-slate-300 cursor-pointer">
-                      {t.locationYes}
+                      {t.yesLocation}
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="maybe" id="location-maybe" className="border-slate-600 text-teal-500" />
                     <Label htmlFor="location-maybe" className="text-slate-300 cursor-pointer">
-                      {t.locationMaybe}
+                      {t.maybeLocation}
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="no" id="location-no" className="border-slate-600 text-teal-500" />
                     <Label htmlFor="location-no" className="text-slate-300 cursor-pointer">
-                      {t.locationNo}
+                      {t.noLocation}
                     </Label>
                   </div>
                 </RadioGroup>
@@ -228,7 +214,7 @@ export default function ModernWaitlist() {
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <Smartphone className="w-5 h-5 text-teal-400" />
-                  <Label className="text-lg font-semibold text-white">{t.platformQuestion}</Label>
+                  <Label className="text-lg font-semibold text-white">{t.deviceQuestion}</Label>
                 </div>
                 <RadioGroup value={device} onValueChange={setDevice}>
                   <div className="flex items-center space-x-2">
@@ -253,7 +239,7 @@ export default function ModernWaitlist() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-700">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <ModernButton
                   type="button"
                   variant="ghost"
@@ -297,7 +283,7 @@ export default function ModernWaitlist() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              {t.waitlistTitle} <span className="gradient-text">{t.trySaveApp}</span>
+              {t.waitlistTitle} <span className="gradient-text">{t.upToSavings}</span>
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.waitlistSubtitle}</p>
           </div>
