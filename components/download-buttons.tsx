@@ -35,7 +35,7 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
         onClick={handleAppStoreClick}
         disabled={disabled}
         className={`download-button app-store ${sizeClasses[size]} ${disabled ? "disabled" : ""}`}
-        aria-label="Descargar en App Store"
+        aria-label="Disponible en App Store"
       >
         <div className="download-button-content">
           <div className="store-icon">
@@ -45,15 +45,10 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
             </svg>
           </div>
           <div className="store-text">
-            <div className="store-subtitle">Descargar en</div>
+            <div className="store-subtitle">Disponible en</div>
             <div className="store-title">App Store</div>
           </div>
         </div>
-        {disabled && (
-          <div className="coming-soon-overlay">
-            <span>Próximamente</span>
-          </div>
-        )}
       </button>
 
       <button
@@ -74,11 +69,6 @@ export default function DownloadButtons({ size = "md", disabled = true, classNam
             <div className="store-title">Google Play</div>
           </div>
         </div>
-        {disabled && (
-          <div className="coming-soon-overlay">
-            <span>Próximamente</span>
-          </div>
-        )}
       </button>
     </div>
   )

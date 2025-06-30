@@ -91,7 +91,7 @@ export const translations = {
     completelyFree: "Completamente gratis",
 
     // Download
-    availableSoon: "Próximamente disponible en:",
+    availableSoon: "Próximamente:",
     downloadOn: "Descargar en",
     availableOn: "Disponible en",
     appStore: "App Store",
