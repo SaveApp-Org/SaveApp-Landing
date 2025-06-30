@@ -7,10 +7,13 @@ import { ThemeProvider } from "@/lib/theme-context"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "SaveApp - Todos los descuentos en un solo lugar",
+  title: "SaveApp",
   description:
     "Descubre y aprovecha todas las promociones de tus tarjetas bancarias de forma inteligente y automatizada.",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/saveapp-s-logo.svg',
+  },
 }
 
 export default function RootLayout({

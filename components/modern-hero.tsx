@@ -62,9 +62,9 @@ export default function ModernHero() {
                 <ModernButton
                   onClick={scrollToWaitlist}
                   size="lg"
-                  className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl group border-0"
+                  className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 h-14"
                 >
-                  {t.joinWaitlist}
+                  {t.joinWaitlistButton}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </ModernButton>
               </div>

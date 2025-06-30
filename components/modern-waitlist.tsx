@@ -349,7 +349,7 @@ export default function ModernWaitlist() {
                     disabled={isLoading || !email}
                     size="lg"
                     loading={isLoading}
-                    className="w-full"
+                    className="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 h-14"
                   >
                     {t.joinWaitlistButton}
                   </ModernButton>

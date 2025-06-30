@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { translations } from "@/lib/translations"
-import SaveAppLogo from "./saveapp-logo"
 import ModernButton from "./modern-button"
 
 export default function ModernHeader() {
@@ -36,14 +35,14 @@ export default function ModernHeader() {
   return (
     <div className="raycast-header-container">
       <div className={`raycast-header-glass ${isScrolled ? "scrolled" : ""}`}>
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full relative">
           {/* Logo */}
-          <div className="flex items-center">
-            <SaveAppLogo size="md" className="group cursor-pointer" />
+          <div className="flex items-center z-10">
+            <img src="/saveapp-name-logo.png" alt="SaveApp Logo" className="h-10 w-auto" />
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navItems.map((item) => (
               <button key={item.id} onClick={() => scrollToSection(item.id)} className="raycast-nav-link">
                 {item.label}
@@ -52,9 +51,13 @@ export default function ModernHeader() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <ModernButton onClick={() => scrollToSection("waitlist")} size="sm" className="raycast-waitlist-button">
-              Waitlist
+          <div className="hidden lg:flex items-center space-x-4 z-10">
+            <ModernButton 
+              onClick={() => scrollToSection("waitlist")}
+              size="sm"
+              className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 h-10"
+            >
+              {t.joinWaitlistButton}
             </ModernButton>
           </div>
 
@@ -80,9 +83,9 @@ export default function ModernHeader() {
                   <ModernButton
                     onClick={() => scrollToSection("waitlist")}
                     size="sm"
-                    className="w-full raycast-waitlist-button"
+                    className="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white font-semibold px-6 py-2 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 h-10"
                   >
-                    Waitlist
+                    {t.joinWaitlistButton}
                   </ModernButton>
                 </div>
               </div>
