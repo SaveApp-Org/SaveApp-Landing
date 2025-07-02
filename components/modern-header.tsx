@@ -46,6 +46,7 @@ export default function ModernHeader() {
   const navItems = [
     { label: t.benefits, id: "benefits" },
     { label: t.howItWorks, id: "how-it-works" },
+    { label: t.banks, id: "banks" },
     { label: "FAQ", id: "faq" },
   ]
 

@@ -283,7 +283,7 @@ export default function ModernWaitlist() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              {t.waitlistTitle} <span className="gradient-text">{t.upToSavings}</span>
+              {t.waitlistTitle}
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.waitlistSubtitle}</p>
           </div>

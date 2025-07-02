@@ -3,14 +3,12 @@
 import { Building2, Plus } from "lucide-react"
 
 const banks = [
-  { name: "Santander", color: "bg-red-500", initial: "S" },
-  { name: "Galicia", color: "bg-orange-500", initial: "G" },
-  { name: "BBVA", color: "bg-blue-600", initial: "B" },
-  { name: "Macro", color: "bg-yellow-500", initial: "M" },
-  { name: "Nación", color: "bg-blue-800", initial: "N" },
-  { name: "Uala", color: "bg-purple-500", initial: "U" },
-  { name: "Naranja X", color: "bg-orange-600", initial: "X" },
-  { name: "Mercado Pago", color: "bg-blue-400", initial: "MP" },
+  { name: "Uala", logo: "/bank-logos/uala.jpeg" },
+  { name: "Brubank", logo: "/bank-logos/brubank.jpeg" },
+  { name: "Naranja X", logo: "/bank-logos/naranjax.jpeg" },
+  { name: "Macro", logo: "/bank-logos/macro.jpeg" },
+  { name: "Santander", logo: "/bank-logos/santander.png" },
+  { name: "Galicia", logo: "/bank-logos/galicia.png" },
 ]
 
 export default function ModernBanks() {
@@ -36,27 +34,25 @@ export default function ModernBanks() {
           </div>
 
           {/* Banks Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
+          <div className="grid grid-cols-3 gap-6 lg:gap-8 mb-12">
             {banks.map((bank, index) => (
               <div key={index} className="group relative" style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="glass rounded-2xl p-6 lg:p-8 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl text-center">
-                  {/* Bank Icon */}
-                  <div className="relative mb-4">
+                  {/* Bank Logo + Blur */}
+                  <div className="relative mb-4 flex justify-center">
+                    <img
+                      src={bank.logo}
+                      alt={bank.name + ' logo'}
+                      className="w-16 h-16 lg:w-20 lg:h-20 object-contain rounded-2xl bg-white p-2 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10"
+                    />
                     <div
-                      className={`w-16 h-16 lg:w-20 lg:h-20 ${bank.color} rounded-2xl flex items-center justify-center text-white font-bold text-lg lg:text-xl mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                    >
-                      {bank.initial}
-                    </div>
-                    <div
-                      className={`absolute inset-0 ${bank.color} rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300`}
+                      className="absolute inset-0 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300 z-0 bg-gradient-to-br from-teal-400 via-blue-400 to-purple-400"
                     ></div>
                   </div>
-
                   {/* Bank Name */}
                   <h3 className="text-white font-semibold text-lg group-hover:text-teal-300 transition-colors duration-300">
                     {bank.name}
                   </h3>
-
                   {/* Hover Effect */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 </div>
@@ -75,20 +71,6 @@ export default function ModernBanks() {
                 <p className="text-slate-400 text-sm">Agregamos nuevos bancos constantemente</p>
               </div>
             </div>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 lg:mt-24">
-            {[
-              { number: "10+", label: "Bancos integrados", color: "text-teal-400" },
-              { number: "500+", label: "Ofertas activas", color: "text-blue-400" },
-              { number: "24/7", label: "Monitoreo continuo", color: "text-purple-400" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className={`text-4xl lg:text-5xl font-bold ${stat.color} mb-2`}>{stat.number}</div>
-                <div className="text-slate-400 font-medium">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
