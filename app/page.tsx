@@ -6,6 +6,7 @@ import ModernBenefits from "@/components/modern-benefits"
 import ModernHowItWorks from "@/components/modern-how-it-works"
 import ModernBanks from "@/components/modern-banks"
 import ModernFaq from "@/components/modern-faq"
+import ModernFooter from "@/components/modern-footer"
 import { useEffect } from "react"
 
 export default function Page() {
@@ -34,6 +35,7 @@ export default function Page() {
         <ModernBanks />
         <ModernFaq />
       </main>
+      <ModernFooter />
     </div>
   )
 }

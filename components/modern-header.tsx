@@ -60,7 +60,7 @@ export default function ModernHeader() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <nav className="hidden lg:flex items-center space-x-8 mx-auto">
             {navItems.map((item) => (
               <button key={item.id} onClick={() => handleNavClick(item.id)} className="raycast-nav-link">
                 {item.label}
@@ -69,7 +69,7 @@ export default function ModernHeader() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="hidden lg:flex items-center space-x-4 z-10">
+          <div className="hidden lg:flex items-center z-10">
             <ModernButton 
               onClick={() => router.push("/waitlist")}
               size="sm"

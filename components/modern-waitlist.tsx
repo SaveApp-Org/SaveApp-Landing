@@ -117,7 +117,7 @@ const CustomCheckboxGroup = ({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-3 mt-3">
+    <div className="grid grid-cols-3 gap-3 mt-3">
       {options.map((option) => (
         <label
           key={option}
@@ -511,7 +511,7 @@ export default function ModernWaitlist() {
                     type="button"
                     variant="ghost"
                     onClick={handleSkipSurvey}
-                    className="flex-1"
+                    className="flex-1 hover:text-teal-400 !bg-transparent !border-none !shadow-none transition-none focus:ring-0 focus:outline-none"
                     disabled={isLoading}>
                     {t.maybeLater}
                   </ModernButton>
@@ -528,7 +528,6 @@ export default function ModernWaitlist() {
                     }
                     className="flex-1"
                     loading={isLoading}>
-                    <Star className="w-4 h-4 mr-2" />
                     {t.getPriorityAccess}
                   </ModernButton>
                 </div>
