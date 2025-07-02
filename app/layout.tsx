@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "Descubre y aprovecha todas las promociones de tus tarjetas bancarias de forma inteligente y automatizada.",
   generator: 'v0.dev',
   icons: {
-    icon: '/saveapp-s-logo.svg',
+    icon: '/saveapp-s-logo.png',
   },
 }
 
