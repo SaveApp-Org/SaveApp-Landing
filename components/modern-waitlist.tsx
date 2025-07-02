@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import DownloadButtons from "./download-buttons"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -14,10 +14,26 @@ import { CheckCircle, Star, Smartphone, MapPin, Building2, TrendingUp, Gift, Ale
 import { useTheme } from "@/lib/theme-context"
 import { translations } from "@/lib/translations"
 import ModernButton from "./modern-button"
+import { joinWaitlist, submitWaitlistSurvey, getWaitlistQuestions } from "@/lib/utils/waitlist-service"
 
 type WaitlistStep = "initial" | "complete"
 
 const banks = ["Santander", "Galicia", "BBVA", "Macro", "Nación", "Uala", "Naranja X", "Mercado Pago", "Otros"]
+
+function useWaitlistQuestions() {
+  const [questions, setQuestions] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    getWaitlistQuestions()
+      .then(setQuestions)
+      .catch(() => setError("No se pudieron cargar las preguntas"))
+      .finally(() => setLoading(false))
+  }, [])
+
+  return { questions, loading, error }
+}
 
 export default function ModernWaitlist() {
   const t = translations.es
@@ -31,6 +47,44 @@ export default function ModernWaitlist() {
   const [surveyCompleted, setSurveyCompleted] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const { questions: surveyQuestions, loading: loadingQuestions, error: errorQuestions } = useWaitlistQuestions()
+  const [answers, setAnswers] = useState<any[]>([])
+
+  useEffect(() => {
+    if (surveyQuestions.length > 0) {
+      setAnswers(surveyQuestions.map(() => ""))
+    }
+  }, [surveyQuestions])
+
+  const handleDynamicAnswerChange = (idx: number, value: any) => {
+    setAnswers((prev) => {
+      const copy = [...prev]
+      copy[idx] = value
+      return copy
+    })
+  }
+
+  const handleDynamicSurveySubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+    try {
+      // Formatear respuestas para el backend
+      const formattedAnswers = surveyQuestions.map((q, idx) => ({
+        question_value: q.question_value,
+        optional: q.optional,
+        answer_value: answers[idx],
+      }))
+      await submitWaitlistSurvey(email, formattedAnswers)
+      setSurveyCompleted(true)
+      setShowSurveyPopup(false)
+    } catch (error) {
+      setError("Error de conexión. Por favor intenta nuevamente.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const handleInitialSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
@@ -39,8 +93,7 @@ export default function ModernWaitlist() {
     setError(null)
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await joinWaitlist(email)
       setStep("complete")
     } catch (error) {
       console.error("Error joining waitlist:", error)
@@ -56,8 +109,24 @@ export default function ModernWaitlist() {
     setError(null)
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const answers = [
+        {
+          question_value: "¿Qué bancos utilizas actualmente?",
+          optional: false,
+          answer_value: selectedBanks,
+        },
+        {
+          question_value: "¿Compartirías tu ubicación para recomendaciones personalizadas?",
+          optional: false,
+          answer_value: shareLocation,
+        },
+        {
+          question_value: "¿Cuál es tu plataforma preferida?",
+          optional: false,
+          answer_value: device,
+        },
+      ]
+      await submitWaitlistSurvey(email, answers)
       setSurveyCompleted(true)
       setShowSurveyPopup(false)
     } catch (error) {
@@ -152,114 +221,78 @@ export default function ModernWaitlist() {
               </div>
             )}
 
-            <form onSubmit={handleSurveySubmit} className="space-y-6">
-              {/* Banks Question */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Building2 className="w-5 h-5 text-teal-400" />
-                  <Label className="text-lg font-semibold text-white">{t.banksQuestion}</Label>
-                  <span className="text-sm text-slate-400">{t.selectAllApply}</span>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {banks.map((bank) => (
-                    <div key={bank} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={bank}
-                        checked={selectedBanks.includes(bank)}
-                        onCheckedChange={(checked) => handleBankChange(bank, checked as boolean)}
-                        className="border-slate-600 data-[state=checked]:bg-teal-500 data-[state=checked]:border-teal-500 rounded-sm"
+            {!loadingQuestions && surveyQuestions.length > 0 && (
+              <form onSubmit={handleDynamicSurveySubmit} className="space-y-6">
+                {surveyQuestions.map((q, idx) => (
+                  <div key={q.question_value}>
+                    <Label className="text-lg font-semibold text-white mb-2 block">{q.question_value}</Label>
+                    {Array.isArray(q.answer_value) ? (
+                      q.answer_value.length > 3 ? (
+                        // Si hay muchas opciones, usar select
+                        <select
+                          className="bg-slate-800/50 border-slate-600 text-white rounded-xl p-2 mt-2"
+                          value={answers[idx]}
+                          onChange={e => handleDynamicAnswerChange(idx, e.target.value)}
+                          required={!q.optional}
+                        >
+                          <option value="">Selecciona una opción</option>
+                          {q.answer_value.map((opt: string) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        // Si hay pocas opciones, usar radio
+                        <div className="flex gap-4 mt-2">
+                          {q.answer_value.map((opt: string) => (
+                            <label key={opt} className="flex items-center gap-2 text-slate-300">
+                              <input
+                                type="radio"
+                                name={`question-${idx}`}
+                                value={opt}
+                                checked={answers[idx] === opt}
+                                onChange={() => handleDynamicAnswerChange(idx, opt)}
+                                required={!q.optional}
+                              />
+                              {opt}
+                            </label>
+                          ))}
+                        </div>
+                      )
+                    ) : (
+                      <input
+                        className="bg-slate-800/50 border-slate-600 text-white rounded-xl p-2 mt-2"
+                        type="text"
+                        value={answers[idx]}
+                        onChange={e => handleDynamicAnswerChange(idx, e.target.value)}
+                        required={!q.optional}
                       />
-                      <Label htmlFor={bank} className="text-slate-300 cursor-pointer text-sm">
-                        {bank}
-                      </Label>
-                    </div>
-                  ))}
+                    )}
+                  </div>
+                ))}
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <ModernButton
+                    type="button"
+                    variant="ghost"
+                    onClick={handleSkipSurvey}
+                    className="flex-1"
+                    disabled={isLoading}
+                  >
+                    {t.maybeLater}
+                  </ModernButton>
+                  <ModernButton
+                    type="submit"
+                    disabled={isLoading || answers.some((a, i) => !surveyQuestions[i].optional && !a)}
+                    className="flex-1"
+                    loading={isLoading}
+                  >
+                    <Star className="w-4 h-4 mr-2" />
+                    {t.getPriorityAccess}
+                  </ModernButton>
                 </div>
-              </div>
-
-              {/* Location Question */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="w-5 h-5 text-teal-400" />
-                  <Label className="text-lg font-semibold text-white">{t.locationQuestion}</Label>
-                </div>
-                <div className="glass rounded-lg p-3 mb-4 border border-slate-700">
-                  <p className="text-sm text-slate-300">
-                    <strong className="text-teal-400">{t.whyUseful}</strong> {t.locationExplanation}
-                  </p>
-                </div>
-                <RadioGroup value={shareLocation} onValueChange={setShareLocation}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="location-yes" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="location-yes" className="text-slate-300 cursor-pointer">
-                      {t.yesLocation}
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="maybe" id="location-maybe" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="location-maybe" className="text-slate-300 cursor-pointer">
-                      {t.maybeLocation}
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="location-no" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="location-no" className="text-slate-300 cursor-pointer">
-                      {t.noLocation}
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              {/* Device Question */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Smartphone className="w-5 h-5 text-teal-400" />
-                  <Label className="text-lg font-semibold text-white">{t.deviceQuestion}</Label>
-                </div>
-                <RadioGroup value={device} onValueChange={setDevice}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="ios" id="device-ios" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="device-ios" className="text-slate-300 cursor-pointer flex items-center gap-2">
-                      <span>📱</span> iPhone (iOS)
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="android" id="device-android" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="device-android" className="text-slate-300 cursor-pointer flex items-center gap-2">
-                      <span>🤖</span> Android
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="both" id="device-both" className="border-slate-600 text-teal-500" />
-                    <Label htmlFor="device-both" className="text-slate-300 cursor-pointer flex items-center gap-2">
-                      <span>📱🤖</span> Uso ambos sistemas
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <ModernButton
-                  type="button"
-                  variant="ghost"
-                  onClick={handleSkipSurvey}
-                  className="flex-1"
-                  disabled={isLoading}
-                >
-                  {t.maybeLater}
-                </ModernButton>
-                <ModernButton
-                  type="submit"
-                  disabled={isLoading || selectedBanks.length === 0 || !shareLocation || !device}
-                  className="flex-1"
-                  loading={isLoading}
-                >
-                  <Star className="w-4 h-4 mr-2" />
-                  {t.getPriorityAccess}
-                </ModernButton>
-              </div>
-            </form>
+              </form>
+            )}
+            {loadingQuestions && <div className="text-slate-400">Cargando preguntas...</div>}
+            {errorQuestions && <div className="text-red-400">{errorQuestions}</div>}
 
             {/* Privacy Note */}
             <div className="text-xs text-slate-400 text-center mt-4 p-3 bg-slate-800/30 rounded-lg">
