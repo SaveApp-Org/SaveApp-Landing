@@ -279,7 +279,7 @@ export default function ModernWaitlist() {
       setSurveyCompleted(true);
       setShowSurveyPopup(false);
     } catch (error) {
-      setError("Error de conexión. Por favor intenta nuevamente.");
+      setError(t.systemMessages.connectionError);
     } finally {
       setIsLoading(false);
     }
@@ -302,7 +302,7 @@ export default function ModernWaitlist() {
 
       if (alreadyInWaitlist) {
         setStep("initial");
-        setAlreadyInWaitlistMsg("Ya estás en la waitlist con este email.");
+        setAlreadyInWaitlistMsg(t.systemMessages.alreadyInWaitlist);
         setError(null);
         return;
       }
@@ -310,7 +310,7 @@ export default function ModernWaitlist() {
       setStep("complete");
     } catch (error) {
       console.error("Error joining waitlist:", error);
-      setError("Error de conexión. Por favor intenta nuevamente.");
+      setError(t.systemMessages.connectionError);
     } finally {
       setIsLoading(false);
     }
@@ -345,7 +345,7 @@ export default function ModernWaitlist() {
       setShowSurveyPopup(false);
     } catch (error) {
       console.error("Error completing survey:", error);
-      setError("Error de conexión. Por favor intenta nuevamente.");
+      setError(t.systemMessages.connectionError);
     } finally {
       setIsLoading(false);
     }
@@ -400,7 +400,7 @@ export default function ModernWaitlist() {
                 cursor: "pointer",
               }}>
               <span className="inline-block shimmer-text-inner">
-                Avanzar en la lista respondiendo 3 preguntas &gt;&gt;
+                {t.systemMessages.advanceInListSurvey}
               </span>
             </button>
           )}
@@ -500,7 +500,7 @@ export default function ModernWaitlist() {
                             handleDynamicAnswerChange(idx, e.target.value)
                           }
                           required={!q.optional}
-                          placeholder="Escribe tu respuesta..."
+                          placeholder={t.systemMessages.writeYourAnswer}
                         />
                       )}
                     </div>
@@ -534,7 +534,7 @@ export default function ModernWaitlist() {
               </form>
             )}
             {loadingQuestions && (
-              <div className="text-slate-400">Cargando preguntas...</div>
+              <div className="text-slate-400">{t.systemMessages.loadingQuestions}</div>
             )}
             {errorQuestions && <div className="text-red-400">{errorQuestions}</div>}
           </DialogContent>
@@ -607,7 +607,7 @@ export default function ModernWaitlist() {
                 {/* Download Section - Coming Soon */}
                 {/*
                 <div className="mt-12 text-center">
-                  <p className="text-slate-400 mb-6 font-medium">{t.availableSoon}</p>
+                  <p className="text-slate-400 mb-6 font-medium">{t.systemMessages.availableSoon}</p>
                   <DownloadButtons size="md" disabled={true} />
                 </div>
                 */}

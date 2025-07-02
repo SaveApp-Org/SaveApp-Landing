@@ -96,5 +96,14 @@ export const translations = {
     availableOn: "Disponible en",
     appStore: "App Store",
     googlePlay: "Google Play",
+
+    // System Messages
+    systemMessages: {
+      connectionError: "Error de conexión. Por favor intenta nuevamente.",
+      alreadyInWaitlist: "Ya estás en la waitlist con este email.",
+      advanceInListSurvey: "Avanzar en la lista respondiendo 3 preguntas >>",
+      loadingQuestions: "Cargando preguntas...",
+      writeYourAnswer: "Escribe tu respuesta...",
+    },
   }
 }
