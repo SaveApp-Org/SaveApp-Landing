@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { CheckCircle, Star, Smartphone, MapPin, Building2, TrendingUp, Gift, AlertCircle, Sparkles } from "lucide-react"
+import { CheckCircle, Star, Smartphone, MapPin, Building2, TrendingUp, Gift, AlertCircle, Sparkles, Check } from "lucide-react"
 import { useTheme } from "@/lib/theme-context"
 import { translations } from "@/lib/translations"
 import ModernButton from "./modern-button"
@@ -18,7 +18,151 @@ import { joinWaitlist, submitWaitlistSurvey, getWaitlistQuestions } from "@/lib/
 
 type WaitlistStep = "initial" | "complete"
 
-const banks = ["Santander", "Galicia", "BBVA", "Macro", "Nación", "Uala", "Naranja X", "Mercado Pago", "Otros"]
+// Bancos mostrados en la landing + 'Otros'
+const LANDING_BANKS = ["Uala", "Brubank", "Naranja X", "Macro", "Santander", "Galicia", "Otros"]
+
+// Componente personalizado para radio buttons
+const CustomRadioGroup = ({ options, value, onChange, name }: {
+  options: string[]
+  value: string
+  onChange: (value: string) => void
+  name: string
+}) => {
+  return (
+    <div className="grid grid-cols-1 gap-3 mt-3">
+      {options.map((option) => (
+        <label
+          key={option}
+          className={`
+            relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all
+            ${value === option 
+              ? 'border-teal-500 bg-teal-500/10' 
+              : 'border-slate-600 bg-slate-800/30 hover:border-slate-500 hover:bg-slate-800/50'
+            }
+          `}
+        >
+          <input
+            type="radio"
+            name={name}
+            value={option}
+            checked={value === option}
+            onChange={(e) => onChange(e.target.value)}
+            className="sr-only"
+          />
+          <div className={`
+            w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center transition-all
+            ${value === option 
+              ? 'border-teal-500 bg-teal-500' 
+              : 'border-slate-400'
+            }
+          `}>
+            {value === option && (
+              <div className="w-2 h-2 rounded-full bg-white" />
+            )}
+          </div>
+          <span className="text-white font-medium">{option}</span>
+        </label>
+      ))}
+    </div>
+  )
+}
+
+// Componente personalizado para checkboxes múltiples (para bancos)
+const CustomCheckboxGroup = ({ options, values, onChange }: {
+  options: string[]
+  values: string[]
+  onChange: (values: string[]) => void
+}) => {
+  const handleOptionChange = (option: string, checked: boolean) => {
+    if (checked) {
+      onChange([...values, option])
+    } else {
+      onChange(values.filter(v => v !== option))
+    }
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-3 mt-3">
+      {options.map((option) => (
+        <label
+          key={option}
+          className={`
+            relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all
+            ${values.includes(option)
+              ? 'border-teal-500 bg-teal-500/10' 
+              : 'border-slate-600 bg-slate-800/30 hover:border-slate-500 hover:bg-slate-800/50'
+            }
+          `}
+        >
+          <input
+            type="checkbox"
+            value={option}
+            checked={values.includes(option)}
+            onChange={(e) => handleOptionChange(option, e.target.checked)}
+            className="sr-only"
+          />
+          <div className={`
+            w-5 h-5 rounded border-2 mr-3 flex items-center justify-center transition-all
+            ${values.includes(option)
+              ? 'border-teal-500 bg-teal-500' 
+              : 'border-slate-400'
+            }
+          `}>
+            {values.includes(option) && (
+              <Check className="w-3 h-3 text-white" />
+            )}
+          </div>
+          <span className="text-white font-medium">{option}</span>
+        </label>
+      ))}
+    </div>
+  )
+}
+
+// Componente personalizado para select
+const CustomSelect = ({ options, value, onChange, placeholder }: {
+  options: string[]
+  value: string
+  onChange: (value: string) => void
+  placeholder: string
+}) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className="relative mt-3">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`
+          w-full p-4 rounded-xl border-2 text-left transition-all
+          ${value 
+            ? 'border-teal-500 bg-teal-500/10 text-white' 
+            : 'border-slate-600 bg-slate-800/30 text-slate-400 hover:border-slate-500'
+          }
+        `}
+      >
+        {value || placeholder}
+      </button>
+      {isOpen && (
+        <div className="absolute top-full mt-1 w-full bg-slate-800 border-2 border-slate-600 rounded-xl z-50 max-h-60 overflow-y-auto">
+          {options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => {
+                onChange(option)
+                setIsOpen(false)
+              }}
+              className="w-full p-3 text-left text-white hover:bg-slate-700 transition-colors"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function useWaitlistQuestions() {
   const [questions, setQuestions] = useState<any[]>([])
@@ -70,11 +214,20 @@ export default function ModernWaitlist() {
     setError(null)
     try {
       // Formatear respuestas para el backend
-      const formattedAnswers = surveyQuestions.map((q, idx) => ({
-        question_value: q.question_value,
-        optional: q.optional,
-        answer_value: answers[idx],
-      }))
+      const formattedAnswers = surveyQuestions.map((q, idx) => {
+        let answerValue = answers[idx]
+        
+        // Si es una pregunta sobre bancos y hay múltiples valores, unirlos con coma
+        if (q.question_value.toLowerCase().includes('banco') && Array.isArray(answerValue)) {
+          answerValue = answerValue.join(', ')
+        }
+        
+        return {
+          question_value: q.question_value,
+          optional: q.optional,
+          answer_value: answerValue,
+        }
+      })
       await submitWaitlistSurvey(email, formattedAnswers)
       setSurveyCompleted(true)
       setShowSurveyPopup(false)
@@ -113,7 +266,7 @@ export default function ModernWaitlist() {
         {
           question_value: "¿Qué bancos utilizas actualmente?",
           optional: false,
-          answer_value: selectedBanks,
+          answer_value: selectedBanks.join(', '), // Enviar separado por comas
         },
         {
           question_value: "¿Compartirías tu ubicación para recomendaciones personalizadas?",
@@ -169,20 +322,7 @@ export default function ModernWaitlist() {
               ? "Has avanzado significativamente en la lista y serás de los primeros en acceder a SaveApp."
               : "Te hemos agregado a nuestra lista de espera. Te notificaremos cuando la beta esté lista."}
           </p>
-          <div className="mb-8">
-            {surveyCompleted ? (
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg animate-glow">
-                <Star className="w-5 h-5 fill-current" />
-                <span>Posición prioritaria</span>
-              </div>
-            ) : (
-              <div className="inline-flex items-center gap-2 glass border border-slate-700/50 text-teal-400 px-6 py-3 rounded-full font-semibold">
-                <Sparkles className="w-5 h-5" />
-                <span>En lista de espera</span>
-              </div>
-            )}
-          </div>
-          {/* Texto shimmer para avanzar en la lista */}
+          {/* BOTÓN ELIMINADO: Solo mostrar si NO se completó la encuesta */}
           {!surveyCompleted && (
             <button
               type="button"
@@ -191,7 +331,7 @@ export default function ModernWaitlist() {
               style={{ outline: "none", border: "none", background: "none", cursor: "pointer" }}
             >
               <span className="inline-block shimmer-text-inner">
-                Avanzar en la lista respondiendo 3 preguntas &gt; &gt;
+                Avanzar en la lista respondiendo 3 preguntas &gt;&gt;
               </span>
             </button>
           )}
@@ -223,52 +363,55 @@ export default function ModernWaitlist() {
 
             {!loadingQuestions && surveyQuestions.length > 0 && (
               <form onSubmit={handleDynamicSurveySubmit} className="space-y-6">
-                {surveyQuestions.map((q, idx) => (
-                  <div key={q.question_value}>
-                    <Label className="text-lg font-semibold text-white mb-2 block">{q.question_value}</Label>
-                    {Array.isArray(q.answer_value) ? (
-                      q.answer_value.length > 3 ? (
-                        // Si hay muchas opciones, usar select
-                        <select
-                          className="bg-slate-800/50 border-slate-600 text-white rounded-xl p-2 mt-2"
+                {surveyQuestions.map((q, idx) => {
+                  // Debug: Log para ver la estructura de la pregunta
+                  console.log('Pregunta:', q.question_value, 'answer_value:', q.answer_value, 'tipo:', typeof q.answer_value)
+                  
+                  // Detectar si es pregunta de bancos de forma más robusta
+                  const isBankQuestion = q.question_value.toLowerCase().includes('banco')
+                  
+                  return (
+                    <div key={q.question_value}>
+                      <Label className="text-lg font-semibold text-white mb-2 block">{q.question_value}</Label>
+                      {isBankQuestion ? (
+                        // SIEMPRE usar CustomCheckboxGroup para preguntas de bancos
+                        <CustomCheckboxGroup
+                          options={LANDING_BANKS}
+                          values={Array.isArray(answers[idx]) ? answers[idx] : []}
+                          onChange={(values) => handleDynamicAnswerChange(idx, values)}
+                        />
+                      ) : Array.isArray(q.answer_value) ? (
+                        q.answer_value.length > 3 ? (
+                          // Si hay muchas opciones, usar select personalizado
+                          <CustomSelect
+                            options={q.answer_value}
+                            value={answers[idx]}
+                            onChange={(value) => handleDynamicAnswerChange(idx, value)}
+                            placeholder="Selecciona una opción"
+                          />
+                        ) : (
+                          // Si hay pocas opciones, usar radio personalizado
+                          <CustomRadioGroup
+                            options={q.answer_value}
+                            value={answers[idx]}
+                            onChange={(value) => handleDynamicAnswerChange(idx, value)}
+                            name={`question-${idx}`}
+                          />
+                        )
+                      ) : (
+                        // Input de texto personalizado
+                        <input
+                          className="w-full p-4 mt-3 bg-slate-800/30 border-2 border-slate-600 text-white rounded-xl focus:border-teal-500 focus:ring-0 transition-all placeholder-slate-400"
+                          type="text"
                           value={answers[idx]}
                           onChange={e => handleDynamicAnswerChange(idx, e.target.value)}
                           required={!q.optional}
-                        >
-                          <option value="">Selecciona una opción</option>
-                          {q.answer_value.map((opt: string) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        // Si hay pocas opciones, usar radio
-                        <div className="flex gap-4 mt-2">
-                          {q.answer_value.map((opt: string) => (
-                            <label key={opt} className="flex items-center gap-2 text-slate-300">
-                              <input
-                                type="radio"
-                                name={`question-${idx}`}
-                                value={opt}
-                                checked={answers[idx] === opt}
-                                onChange={() => handleDynamicAnswerChange(idx, opt)}
-                                required={!q.optional}
-                              />
-                              {opt}
-                            </label>
-                          ))}
-                        </div>
-                      )
-                    ) : (
-                      <input
-                        className="bg-slate-800/50 border-slate-600 text-white rounded-xl p-2 mt-2"
-                        type="text"
-                        value={answers[idx]}
-                        onChange={e => handleDynamicAnswerChange(idx, e.target.value)}
-                        required={!q.optional}
-                      />
-                    )}
-                  </div>
-                ))}
+                          placeholder="Escribe tu respuesta..."
+                        />
+                      )}
+                    </div>
+                  )
+                })}
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <ModernButton
                     type="button"
@@ -281,7 +424,12 @@ export default function ModernWaitlist() {
                   </ModernButton>
                   <ModernButton
                     type="submit"
-                    disabled={isLoading || answers.some((a, i) => !surveyQuestions[i].optional && !a)}
+                    disabled={isLoading || answers.some((a, i) => {
+                      const question = surveyQuestions[i]
+                      if (question.optional) return false
+                      if (Array.isArray(a)) return a.length === 0
+                      return !a
+                    })}
                     className="flex-1"
                     loading={isLoading}
                   >
@@ -293,11 +441,6 @@ export default function ModernWaitlist() {
             )}
             {loadingQuestions && <div className="text-slate-400">Cargando preguntas...</div>}
             {errorQuestions && <div className="text-red-400">{errorQuestions}</div>}
-
-            {/* Privacy Note */}
-            <div className="text-xs text-slate-400 text-center mt-4 p-3 bg-slate-800/30 rounded-lg">
-              🔒 Tu información está segura. Solo la usamos para mejorar tu experiencia con SaveApp.
-            </div>
           </DialogContent>
         </Dialog>
       </div>
