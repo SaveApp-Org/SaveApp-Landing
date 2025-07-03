@@ -405,6 +405,13 @@
   .raycast-header-glass {
     padding: 12px 24px;
     height: 64px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .raycast-header-glass.scrolled {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
@@ -416,6 +423,13 @@
   .raycast-header-glass {
     padding: 8px 16px;
     height: 56px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .raycast-header-glass.scrolled {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .download-buttons-wrapper {
