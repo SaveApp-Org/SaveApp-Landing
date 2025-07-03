@@ -20,7 +20,7 @@ const benefits = [
   {
     icon: Grid3X3,
     title: "Organización perfecta",
-    description: "Navega fácilmente entre categorías: restaurantes, retail, viajes y más",
+    description: "Navega fácilmente entre categorías: restaurantes, supermercados, viajes y más",
     gradient: "from-purple-500 to-pink-500",
     delay: "200ms",
   },

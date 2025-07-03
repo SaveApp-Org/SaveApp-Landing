@@ -5,29 +5,29 @@ import { Search, Brain, Bell, TrendingUp, ArrowRight } from "lucide-react"
 const steps = [
   {
     icon: Search,
-    title: "Web Scraping Inteligente",
-    description: "Recopilamos automáticamente ofertas de todos los bancos y comercios en tiempo real",
+    title: "Monitoreo Inteligente",
+    description: "Recopilamos miles de ofertas de bancos, comercios y sitios soportados de manera automatizada",
     gradient: "from-teal-500 to-cyan-500",
     number: "01",
   },
   {
     icon: Brain,
-    title: "Análisis con IA",
-    description: "Nuestra inteligencia artificial analiza términos y condiciones para extraer información clave",
+    title: "Análisis con Inteligencia Artificial",
+    description: "Utilizamos inteligencia artificial de vanguardia para analizar ofertas y mostrarte la información más relevante de forma sencilla",
     gradient: "from-blue-500 to-indigo-500",
     number: "02",
   },
   {
     icon: Bell,
     title: "Notificaciones Personalizadas",
-    description: "Te alertamos cuando hay ofertas relevantes cerca de tu ubicación",
+    description: "Te alertamos cuando hay ofertas imperdibles de tus lugares favoritos",
     gradient: "from-purple-500 to-pink-500",
     number: "03",
   },
   {
     icon: TrendingUp,
     title: "Seguimiento de Reintegros",
-    description: "Monitoreamos tus compras y te recordamos verificar que recibiste todos los beneficios",
+    description: "Avisanos si usaste una oferta y te recordaremos al final del plazo para verificar que efectivamente recibiste el reintegro",
     gradient: "from-orange-500 to-red-500",
     number: "04",
   },
@@ -83,11 +83,11 @@ export default function ModernHowItWorks() {
                         <>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                            <span>Monitoreo 24/7 de sitios bancarios</span>
+                            <span>Actualizaciones recurrentes de las ofertas de cada sitio</span>
                           </div>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div>
-                            <span>Actualización en tiempo real</span>
+                            <span>Seguimos sumando bancos y comercios</span>
                           </div>
                         </>
                       )}
@@ -95,11 +95,11 @@ export default function ModernHowItWorks() {
                         <>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                            <span>Procesamiento de lenguaje natural</span>
+                            <span>Procesamiento de términos y condiciones</span>
                           </div>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                            <span>Extracción de datos clave</span>
+                            <span>Sintetización de datos clave</span>
                           </div>
                         </>
                       )}
@@ -107,11 +107,11 @@ export default function ModernHowItWorks() {
                         <>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                            <span>Geolocalización inteligente</span>
+                            <span>Agrega tus comercios y marcas favoritas</span>
                           </div>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
-                            <span>Filtros personalizados</span>
+                            <span>Geolocalización inteligente</span>
                           </div>
                         </>
                       )}
@@ -123,7 +123,7 @@ export default function ModernHowItWorks() {
                           </div>
                           <div className="flex items-center space-x-2 text-slate-300">
                             <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
-                            <span>Historial de ahorros</span>
+                            <span>Seguimiento de ahorros</span>
                           </div>
                         </>
                       )}

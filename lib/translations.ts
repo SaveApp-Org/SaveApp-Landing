@@ -15,7 +15,7 @@ export const translations = {
     joinWaitlist: "Únete a la waitlist",
     comingSoonBeta: "Próximamente en Beta",
     upToSavings: "Hasta 45% ahorro",
-    banksCount: "10+ bancos",
+    banksCount: "5+ bancos",
     alerts247: "24/7 alertas",
 
     // Benefits
@@ -27,7 +27,7 @@ export const translations = {
     smartNotifications: "Notificaciones inteligentes",
     smartNotificationsDesc: "Recibe alertas personalizadas de ofertas que realmente te interesan",
     perfectOrganization: "Organización perfecta",
-    perfectOrganizationDesc: "Navega fácilmente entre categorías: restaurantes, retail, viajes y más",
+    perfectOrganizationDesc: "Navega fácilmente entre categorías: restaurantes, supermercados, viajes y más",
     multipleBanks: "Múltiples bancos",
     multipleBanksDesc: "Compatible con los principales bancos del país en una sola plataforma",
 

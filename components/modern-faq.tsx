@@ -7,17 +7,17 @@ const faqs = [
   {
     question: "¿Cómo funciona SaveApp?",
     answer:
-      "SaveApp recopila automáticamente todas las ofertas y promociones de tus tarjetas bancarias y las presenta de forma organizada en una sola aplicación. Recibirás notificaciones personalizadas según tus preferencias.",
+      "SaveApp recopila todas las ofertas y promociones de tus tarjetas bancarias y billeteras virtuales para presentarlas de manera organizada en una sola aplicación. Recibirás notificaciones personalizadas según tus preferencias.",
   },
   {
     question: "¿Es seguro conectar mis tarjetas?",
     answer:
-      "Absolutamente. Utilizamos encriptación de nivel bancario y nunca almacenamos tus datos sensibles. Solo accedemos a la información de ofertas y promociones.",
+      "Absolutamente. SaveApp no pide datos sensibles de tus tarjetas, solo información básica como el banco y tipo de tarjeta para mostrarte las ofertas y promociones que aplican a ellas.",
   },
   {
     question: "¿Qué bancos están disponibles?",
     answer:
-      "Actualmente trabajamos con los 10 principales bancos del país. Continuamente agregamos nuevas instituciones para ampliar nuestra cobertura.",
+      "Actualmente trabajamos con 5 de los bancos y billeteras virtuales más importantes del país. Continuamente agregamos nuevas instituciones para ampliar nuestra cobertura.",
   },
 ]
 

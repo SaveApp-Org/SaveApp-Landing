@@ -3,12 +3,12 @@
 import { Building2, Plus } from "lucide-react"
 
 const banks = [
-  { name: "Uala", logo: "/bank-logos/uala.jpeg" },
-  { name: "Brubank", logo: "/bank-logos/brubank.jpeg" },
-  { name: "Naranja X", logo: "/bank-logos/naranjax.jpeg" },
-  { name: "Macro", logo: "/bank-logos/macro.jpeg" },
-  { name: "Santander", logo: "/bank-logos/santander.png" },
-  { name: "Galicia", logo: "/bank-logos/galicia.png" },
+  { name: "Ualá", logo: "/bank-logos/uala.jpeg", url: "https://www.uala.com.ar" },
+  { name: "Brubank", logo: "/bank-logos/brubank.jpeg", url: "https://www.brubank.com" },
+  { name: "Naranja X", logo: "/bank-logos/naranjax.jpeg", url: "https://www.naranjax.com" },
+  { name: "Macro", logo: "/bank-logos/macro.jpeg", url: "https://www.macro.com.ar" },
+  { name: "Santander", logo: "/bank-logos/santander.png", url: "https://www.santander.com.ar" },
+  { name: "Galicia", logo: "/bank-logos/galicia.png", url: "https://www.galicia.ar" },
 ]
 
 export default function ModernBanks() {
@@ -34,10 +34,17 @@ export default function ModernBanks() {
           </div>
 
           {/* Banks Grid */}
-          <div className="grid grid-cols-3 gap-6 lg:gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
             {banks.map((bank, index) => (
-              <div key={index} className="group relative" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="glass rounded-2xl p-6 lg:p-8 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl text-center">
+              <a 
+                key={index} 
+                href={bank.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block" 
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="glass rounded-2xl p-6 lg:p-8 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl text-center cursor-pointer">
                   {/* Bank Logo + Blur */}
                   <div className="relative mb-4 flex justify-center">
                     <img
@@ -56,20 +63,22 @@ export default function ModernBanks() {
                   {/* Hover Effect */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
 
           {/* More Banks Coming */}
           <div className="text-center">
-            <div className="inline-flex items-center space-x-3 glass rounded-2xl px-8 py-4 border border-slate-700/50">
-              <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center">
-                <Plus className="w-6 h-6 text-slate-400" />
+            <div className="group relative inline-flex items-center glass rounded-2xl px-8 py-4 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg p-2 mr-4">
+                <Plus className="w-6 h-6 text-slate-400 group-hover:text-teal-300 transition-colors duration-300" />
               </div>
               <div className="text-left">
-                <p className="text-white font-semibold">Y muchos más</p>
+                <p className="text-white font-semibold group-hover:text-teal-300 transition-colors duration-300">Y muchos más</p>
                 <p className="text-slate-400 text-sm">Agregamos nuevos bancos constantemente</p>
               </div>
+              {/* Hover Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
           </div>
         </div>

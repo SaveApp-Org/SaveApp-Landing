@@ -2,6 +2,13 @@
 
 import { translations } from "@/lib/translations"
 import { useRouter } from "next/navigation"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger 
+} from "./ui/dialog"
 
 export default function ModernFooter() {
   const t = translations.es
@@ -70,8 +77,248 @@ export default function ModernFooter() {
             <div>
               <h3 className="footer-heading">Información</h3>
               <div className="space-y-3">
-                <a href="#" className="footer-link block">Términos y Condiciones</a>
-                <a href="#" className="footer-link block">Política de Privacidad</a>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="footer-link block text-left w-full">
+                      Términos y Condiciones
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-slate-900 border-slate-700">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-white mb-6">
+                        Términos y Condiciones de SaveApp
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 text-slate-300 leading-relaxed">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">1. Aceptación de los Términos</h3>
+                        <p>
+                          Al acceder y utilizar SaveApp, aceptas estar sujeto a estos términos y condiciones. 
+                          Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestra aplicación.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">2. Descripción del Servicio</h3>
+                        <p>
+                          SaveApp es una aplicación móvil que centraliza y organiza ofertas y promociones 
+                          de bancos y comercios. Recopilamos información de fuentes públicas y la presentamos 
+                          de manera organizada para facilitar el acceso a descuentos y beneficios.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">3. Uso Aceptable</h3>
+                        <p>
+                          Te comprometes a usar SaveApp únicamente para fines legales y de acuerdo con 
+                          estos términos. No debes usar la aplicación para:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Actividades fraudulentas o ilegales</li>
+                          <li>Interferir con el funcionamiento de la aplicación</li>
+                          <li>Intentar acceder a datos no autorizados</li>
+                          <li>Transmitir malware o contenido dañino</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">4. Limitación de Responsabilidad</h3>
+                        <p>
+                          SaveApp proporciona información de terceros y no garantiza la exactitud, 
+                          completitud o actualidad de las ofertas mostradas. No somos responsables por:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Cambios en ofertas por parte de bancos o comercios</li>
+                          <li>Problemas con transacciones realizadas por el usuario</li>
+                          <li>Pérdidas financieras derivadas del uso de la información</li>
+                          <li>Interrupciones del servicio</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">5. Propiedad Intelectual</h3>
+                        <p>
+                          SaveApp y todo su contenido, incluyendo pero no limitado a textos, gráficos, 
+                          logos y software, son propiedad de SaveApp o sus licenciantes y están protegidos 
+                          por leyes de propiedad intelectual.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">6. Modificaciones</h3>
+                        <p>
+                          Nos reservamos el derecho de modificar estos términos en cualquier momento. 
+                          Los cambios entrarán en vigor inmediatamente después de su publicación. 
+                          El uso continuado de la aplicación constituye aceptación de los nuevos términos.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">7. Terminación</h3>
+                        <p>
+                          Podemos suspender o terminar tu acceso a SaveApp en cualquier momento, 
+                          con o sin causa, sin previo aviso. También puedes dejar de usar la aplicación 
+                          en cualquier momento.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">8. Ley Aplicable</h3>
+                        <p>
+                          Estos términos se rigen por las leyes de Argentina. Cualquier disputa será 
+                          resuelta en los tribunales competentes de la Ciudad Autónoma de Buenos Aires.
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-700">
+                        <p className="text-sm text-slate-400">
+                          <strong>Última actualización:</strong> Enero 2025
+                        </p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="footer-link block text-left w-full">
+                      Política de Privacidad
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-slate-900 border-slate-700">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-white mb-6">
+                        Política de Privacidad de SaveApp
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 text-slate-300 leading-relaxed">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">1. Información que Recopilamos</h3>
+                        <p className="mb-3">
+                          Recopilamos la siguiente información para proporcionar nuestros servicios:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 ml-4">
+                          <li><strong>Información de registro:</strong> Email, nombre y preferencias de bancos</li>
+                          <li><strong>Datos de uso:</strong> Cómo interactúas con la aplicación</li>
+                          <li><strong>Información del dispositivo:</strong> Tipo de dispositivo y sistema operativo</li>
+                          <li><strong>Datos de ubicación:</strong> Solo si lo autorizas para ofertas geolocalizadas</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">2. Cómo Usamos tu Información</h3>
+                        <p className="mb-3">
+                          Utilizamos tu información para:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 ml-4">
+                          <li>Proporcionar y mejorar nuestros servicios</li>
+                          <li>Personalizar las ofertas que te mostramos</li>
+                          <li>Enviar notificaciones relevantes</li>
+                          <li>Analizar el uso de la aplicación</li>
+                          <li>Cumplir con obligaciones legales</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">3. Compartir Información</h3>
+                        <p>
+                          <strong>No vendemos, alquilamos ni compartimos tu información personal</strong> con terceros, 
+                          excepto en las siguientes circunstancias:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Con tu consentimiento explícito</li>
+                          <li>Para cumplir con obligaciones legales</li>
+                          <li>Con proveedores de servicios que nos ayudan a operar la aplicación</li>
+                          <li>En caso de fusión o adquisición empresarial</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">4. Seguridad de Datos</h3>
+                        <p>
+                          Implementamos medidas de seguridad técnicas y organizativas para proteger tu información:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Encriptación de datos en tránsito y en reposo</li>
+                          <li>Acceso restringido a información personal</li>
+                          <li>Monitoreo regular de seguridad</li>
+                          <li>Actualizaciones regulares de seguridad</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">5. Tus Derechos</h3>
+                        <p>
+                          Tienes derecho a:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Acceder a tu información personal</li>
+                          <li>Corregir datos inexactos</li>
+                          <li>Solicitar la eliminación de tus datos</li>
+                          <li>Oponerte al procesamiento de datos</li>
+                          <li>Portabilidad de datos</li>
+                          <li>Retirar consentimiento en cualquier momento</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">6. Cookies y Tecnologías Similares</h3>
+                        <p>
+                          Utilizamos cookies y tecnologías similares para mejorar tu experiencia, 
+                          analizar el uso de la aplicación y personalizar contenido. Puedes controlar 
+                          el uso de cookies a través de la configuración de tu dispositivo.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">7. Retención de Datos</h3>
+                        <p>
+                          Conservamos tu información personal solo durante el tiempo necesario para 
+                          cumplir con los propósitos descritos en esta política, o según lo requiera la ley. 
+                          Cuando ya no necesitemos tu información, la eliminaremos de forma segura.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">8. Menores de Edad</h3>
+                        <p>
+                          SaveApp no está dirigida a menores de 18 años. No recopilamos intencionalmente 
+                          información personal de menores. Si eres padre o tutor y crees que tu hijo 
+                          nos ha proporcionado información, contáctanos inmediatamente.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">9. Cambios en esta Política</h3>
+                        <p>
+                          Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos 
+                          sobre cambios significativos por email o a través de la aplicación. 
+                          El uso continuado de SaveApp después de los cambios constituye aceptación 
+                          de la nueva política.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">10. Contacto</h3>
+                        <p>
+                          Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos 
+                          tu información, contáctanos en:
+                        </p>
+                        <p className="mt-2">
+                          <strong>Email:</strong> privacidad@saveapp.com<br />
+                          <strong>Dirección:</strong> SaveApp, Buenos Aires, Argentina
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-700">
+                        <p className="text-sm text-slate-400">
+                          <strong>Última actualización:</strong> Enero 2025
+                        </p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
                 <button 
                   onClick={() => handleNavClick('faq')}
                   className="footer-link block text-left w-full"
@@ -130,8 +377,247 @@ export default function ModernFooter() {
                 © SaveApp, 2025. Todos los derechos reservados.
               </div>
               <div className="flex space-x-6">
-                <a href="#" className="footer-bottom-link">Términos y Condiciones</a>
-                <a href="#" className="footer-bottom-link">Política de Privacidad</a>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="footer-bottom-link">
+                      Términos y Condiciones
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-slate-900 border-slate-700">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-white mb-6">
+                        Términos y Condiciones de SaveApp
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 text-slate-300 leading-relaxed">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">1. Aceptación de los Términos</h3>
+                        <p>
+                          Al acceder y utilizar SaveApp, aceptas estar sujeto a estos términos y condiciones. 
+                          Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestra aplicación.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">2. Descripción del Servicio</h3>
+                        <p>
+                          SaveApp es una aplicación móvil que centraliza y organiza ofertas y promociones 
+                          de bancos y comercios. Recopilamos información de fuentes públicas y la presentamos 
+                          de manera organizada para facilitar el acceso a descuentos y beneficios.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">3. Uso Aceptable</h3>
+                        <p>
+                          Te comprometes a usar SaveApp únicamente para fines legales y de acuerdo con 
+                          estos términos. No debes usar la aplicación para:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Actividades fraudulentas o ilegales</li>
+                          <li>Interferir con el funcionamiento de la aplicación</li>
+                          <li>Intentar acceder a datos no autorizados</li>
+                          <li>Transmitir malware o contenido dañino</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">4. Limitación de Responsabilidad</h3>
+                        <p>
+                          SaveApp proporciona información de terceros y no garantiza la exactitud, 
+                          completitud o actualidad de las ofertas mostradas. No somos responsables por:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Cambios en ofertas por parte de bancos o comercios</li>
+                          <li>Problemas con transacciones realizadas por el usuario</li>
+                          <li>Pérdidas financieras derivadas del uso de la información</li>
+                          <li>Interrupciones del servicio</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">5. Propiedad Intelectual</h3>
+                        <p>
+                          SaveApp y todo su contenido, incluyendo pero no limitado a textos, gráficos, 
+                          logos y software, son propiedad de SaveApp o sus licenciantes y están protegidos 
+                          por leyes de propiedad intelectual.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">6. Modificaciones</h3>
+                        <p>
+                          Nos reservamos el derecho de modificar estos términos en cualquier momento. 
+                          Los cambios entrarán en vigor inmediatamente después de su publicación. 
+                          El uso continuado de la aplicación constituye aceptación de los nuevos términos.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">7. Terminación</h3>
+                        <p>
+                          Podemos suspender o terminar tu acceso a SaveApp en cualquier momento, 
+                          con o sin causa, sin previo aviso. También puedes dejar de usar la aplicación 
+                          en cualquier momento.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">8. Ley Aplicable</h3>
+                        <p>
+                          Estos términos se rigen por las leyes de Argentina. Cualquier disputa será 
+                          resuelta en los tribunales competentes de la Ciudad Autónoma de Buenos Aires.
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-700">
+                        <p className="text-sm text-slate-400">
+                          <strong>Última actualización:</strong> Enero 2025
+                        </p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="footer-bottom-link">
+                      Política de Privacidad
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-slate-900 border-slate-700">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-white mb-6">
+                        Política de Privacidad de SaveApp
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 text-slate-300 leading-relaxed">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">1. Información que Recopilamos</h3>
+                        <p className="mb-3">
+                          Recopilamos la siguiente información para proporcionar nuestros servicios:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 ml-4">
+                          <li><strong>Información de registro:</strong> Email, nombre y preferencias de bancos</li>
+                          <li><strong>Datos de uso:</strong> Cómo interactúas con la aplicación</li>
+                          <li><strong>Información del dispositivo:</strong> Tipo de dispositivo y sistema operativo</li>
+                          <li><strong>Datos de ubicación:</strong> Solo si lo autorizas para ofertas geolocalizadas</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">2. Cómo Usamos tu Información</h3>
+                        <p className="mb-3">
+                          Utilizamos tu información para:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 ml-4">
+                          <li>Proporcionar y mejorar nuestros servicios</li>
+                          <li>Personalizar las ofertas que te mostramos</li>
+                          <li>Enviar notificaciones relevantes</li>
+                          <li>Analizar el uso de la aplicación</li>
+                          <li>Cumplir con obligaciones legales</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">3. Compartir Información</h3>
+                        <p>
+                          <strong>No vendemos, alquilamos ni compartimos tu información personal</strong> con terceros, 
+                          excepto en las siguientes circunstancias:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Con tu consentimiento explícito</li>
+                          <li>Para cumplir con obligaciones legales</li>
+                          <li>Con proveedores de servicios que nos ayudan a operar la aplicación</li>
+                          <li>En caso de fusión o adquisición empresarial</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">4. Seguridad de Datos</h3>
+                        <p>
+                          Implementamos medidas de seguridad técnicas y organizativas para proteger tu información:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Encriptación de datos en tránsito y en reposo</li>
+                          <li>Acceso restringido a información personal</li>
+                          <li>Monitoreo regular de seguridad</li>
+                          <li>Actualizaciones regulares de seguridad</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">5. Tus Derechos</h3>
+                        <p>
+                          Tienes derecho a:
+                        </p>
+                        <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
+                          <li>Acceder a tu información personal</li>
+                          <li>Corregir datos inexactos</li>
+                          <li>Solicitar la eliminación de tus datos</li>
+                          <li>Oponerte al procesamiento de datos</li>
+                          <li>Portabilidad de datos</li>
+                          <li>Retirar consentimiento en cualquier momento</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">6. Cookies y Tecnologías Similares</h3>
+                        <p>
+                          Utilizamos cookies y tecnologías similares para mejorar tu experiencia, 
+                          analizar el uso de la aplicación y personalizar contenido. Puedes controlar 
+                          el uso de cookies a través de la configuración de tu dispositivo.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">7. Retención de Datos</h3>
+                        <p>
+                          Conservamos tu información personal solo durante el tiempo necesario para 
+                          cumplir con los propósitos descritos en esta política, o según lo requiera la ley. 
+                          Cuando ya no necesitemos tu información, la eliminaremos de forma segura.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">8. Menores de Edad</h3>
+                        <p>
+                          SaveApp no está dirigida a menores de 18 años. No recopilamos intencionalmente 
+                          información personal de menores. Si eres padre o tutor y crees que tu hijo 
+                          nos ha proporcionado información, contáctanos inmediatamente.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">9. Cambios en esta Política</h3>
+                        <p>
+                          Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos 
+                          sobre cambios significativos por email o a través de la aplicación. 
+                          El uso continuado de SaveApp después de los cambios constituye aceptación 
+                          de la nueva política.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-white mb-3">10. Contacto</h3>
+                        <p>
+                          Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos 
+                          tu información, contáctanos en:
+                        </p>
+                        <p className="mt-2">
+                          <strong>Email:</strong> privacidad@saveapp.com<br />
+                          <strong>Dirección:</strong> SaveApp, Buenos Aires, Argentina
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-slate-700">
+                        <p className="text-sm text-slate-400">
+                          <strong>Última actualización:</strong> Enero 2025
+                        </p>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </div>

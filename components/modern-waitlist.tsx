@@ -42,7 +42,7 @@ type WaitlistStep = "initial" | "complete";
 
 // Bancos mostrados en la landing + 'Otros'
 const LANDING_BANKS = [
-  "Uala",
+  "Ualá",
   "Brubank",
   "Naranja X",
   "Macro",
@@ -565,7 +565,7 @@ export default function ModernWaitlist() {
           </div>
           {/* Waitlist Form */}
           <div className="max-w-2xl mx-auto">
-            <Card className="glass border-slate-700/50">
+            <Card className="glass border-slate-700/50 hover:border-slate-600/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer">
               <CardContent className="p-8 lg:p-12">
                 {/* Error Display */}
                 {error && (

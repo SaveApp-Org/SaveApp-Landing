@@ -31,9 +31,9 @@ export default function ModernHero() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative">
             {/* Left Content */}
-            <div className="text-center lg:text-left space-y-8">
+            <div className="text-center lg:text-left space-y-8 z-10">
               {/* Badge */}
               
 
@@ -71,32 +71,29 @@ export default function ModernHero() {
                 </ModernButton>
               </div>
             </div>
-
-            {/* Right Content - Transparent Placeholder */}
-            <div className="relative">
-              <div className="relative mx-auto max-w-sm">
-                {/* Transparent Placeholder maintaining layout structure */}
-                <div className="relative bg-transparent rounded-[2.5rem] p-2 h-[600px] w-[300px] mx-auto">
-                  {/* Subtle border to indicate placeholder area */}
-                  <div className="w-full h-full rounded-[2rem] border border-slate-700/30 bg-slate-900/10 backdrop-blur-sm flex items-center justify-center">
-                    <div className="text-center space-y-4 opacity-30">
-                      <div className="w-16 h-16 bg-gradient-to-br from-teal-400/20 to-blue-500/20 rounded-2xl mx-auto flex items-center justify-center">
-                        <Zap className="w-8 h-8 text-teal-400" />
-                      </div>
-                      <p className="text-slate-500 text-sm font-medium">App Preview</p>
-                      <p className="text-slate-600 text-xs">Coming Soon</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Elements */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-teal-400/10 to-blue-500/10 rounded-full blur-xl animate-float"></div>
-                <div
-                  className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-blue-400/10 to-purple-500/10 rounded-full blur-xl animate-float"
-                  style={{ animationDelay: "1s" }}
-                ></div>
-              </div>
-            </div>
+            {/* Right Content - App Mockup (espacio vacío para mantener el grid) */}
+            <div className="hidden lg:block"></div>
+            {/* Imagen mockup sobresaliendo del grid en desktop */}
+            <img 
+              src="/mockup.png" 
+              alt="App Mockup" 
+              className="absolute right-12 top-1/2 translate-x-1/4 -translate-y-1/2 max-w-[70vw] max-h-[90vh] object-contain z-0 pointer-events-none select-none hidden lg:block"
+              style={{minWidth: '600px'}}
+            />
+            {/* Disclaimer debajo de la imagen en desktop */}
+            <p className="hidden lg:block absolute left-[77%] top-[calc(50%+40vh)] -translate-x-1/2 text-xs text-slate-500 text-center w-[300px] max-w-[70vw] z-10 pointer-events-none select-none">
+              Imagen a modo representativo. Las ofertas que se muestran pueden no ser reales.
+            </p>
+            {/* Imagen mockup debajo del contenido en mobile */}
+            <img 
+              src="/mockup.png" 
+              alt="App Mockup" 
+              className="block mx-auto mt-8 w-full object-contain lg:hidden"
+            />
+            {/* Disclaimer debajo de la imagen en mobile */}
+            <p className="block lg:hidden text-xs text-center text-slate-500 mt-1 mx-auto w-full max-w-md">
+              Imagen a modo representativo. Las ofertas que se muestran pueden no ser reales.
+            </p>
           </div>
         </div>
       </div>

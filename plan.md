@@ -69,7 +69,7 @@
 
 ### 5. Bancos Compatibles ✅
 - **Grid responsive** con logos de bancos principales
-- **Bancos incluidos**: Santander, Galicia, BBVA, Macro, Nación, Uala, Naranja X, Mercado Pago
+- **Bancos incluidos**: Santander, Galicia, BBVA, Macro, Nación, Ualá, Naranja X, Mercado Pago
 - **Efectos hover** y colores diferenciados
 - **"Y muchos más..."** para expansión futura
 
