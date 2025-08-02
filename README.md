@@ -14,13 +14,13 @@ Este proyecto está configurado para desplegarse automáticamente en GitHub Page
 
 2. **El despliegue es automático:**
    - Cada vez que hagas push a la rama `main`, se desplegará automáticamente
-   - El workflow está configurado en `.github/workflows/deploy.yml`
+   - El workflow está configurado en `.github/workflows/nextjs.yml`
 
 ### Desarrollo Local
 
 ```bash
-# Instalar dependencias
-npm install
+# Instalar dependencias (con resolución de conflictos)
+npm run install-deps
 
 # Desarrollo
 npm run dev
@@ -52,3 +52,5 @@ npm run serve
 - El proyecto usa `output: 'export'` para generar archivos estáticos
 - Las imágenes están configuradas como `unoptimized: true` para compatibilidad
 - El build se genera en la carpeta `/out`
+- Se usa `--legacy-peer-deps` para resolver conflictos de dependencias
+- El workflow de GitHub Actions está optimizado para exportación estática
