@@ -28,7 +28,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-slate-950">
       <ModernHeader />
-      <main>
+      <main className="pt-20 md:pt-24">
         <ModernHero />
         <ModernBenefits />
         <ModernHowItWorks />
